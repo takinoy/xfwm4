@@ -180,6 +180,7 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
     GtkWidget *easy_click_combo_box = GTK_WIDGET (gtk_builder_get_object (builder, "easy_click_combo_box"));
     GtkWidget *raise_with_any_button_check = GTK_WIDGET (gtk_builder_get_object (builder, "raise_with_any_button_check"));
     GtkWidget *borderless_maximize_check = GTK_WIDGET (gtk_builder_get_object (builder, "borderless_maximize_check"));
+    GtkWidget *titleless_maximize_check = GTK_WIDGET (gtk_builder_get_object (builder, "titleless_maximize_check"));
     GtkWidget *restore_on_move_check = GTK_WIDGET (gtk_builder_get_object (builder, "restore_on_move_check"));
     GtkWidget *tile_on_move_check = GTK_WIDGET (gtk_builder_get_object (builder, "tile_on_move_check"));
     GtkWidget *snap_resist_check = GTK_WIDGET (gtk_builder_get_object (builder, "snap_resist_check"));
@@ -335,6 +336,10 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
                             "/general/borderless_maximize",
                             G_TYPE_BOOLEAN,
                             (GObject *)borderless_maximize_check, "active");
+    xfconf_g_property_bind (xfwm4_channel,
+                            "/general/titleless_maximize",
+                            G_TYPE_BOOLEAN,
+                            (GObject *)titleless_maximize_check, "active");
     xfconf_g_property_bind (xfwm4_channel,
                             "/general/restore_on_move",
                             G_TYPE_BOOLEAN,

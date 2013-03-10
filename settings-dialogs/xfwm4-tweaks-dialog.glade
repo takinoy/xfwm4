@@ -343,6 +343,21 @@ or "skip taskbar" properties set</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkCheckButton" id="titleless_maximize_check">
+                    <property name="label" translatable="yes">Hide title of windows when maximized</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="use_underline">True</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkCheckButton" id="restore_on_move_check">
                     <property name="label" translatable="yes">Restore original _size of maximized windows when moving</property>
                     <property name="visible">True</property>
@@ -354,7 +369,7 @@ or "skip taskbar" properties set</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -369,7 +384,7 @@ or "skip taskbar" properties set</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -384,7 +399,7 @@ or "skip taskbar" properties set</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                   </packing>
                 </child>
                 <child>
@@ -399,7 +414,7 @@ or "skip taskbar" properties set</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">5</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -414,7 +429,7 @@ or "skip taskbar" properties set</property>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                    <property name="position">6</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
               </object>
