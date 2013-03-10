@@ -1,5 +1,6 @@
 activate_action=bring
 borderless_maximize=true
+titleless_maximize=false
 box_move=false
 box_resize=false
 button_layout=O|SHMC

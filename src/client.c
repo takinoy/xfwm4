@@ -3137,6 +3137,8 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
         wc->width = full_w - frameLeft (c) - frameRight (c);
         wc->height = full_h - frameTop (c) - frameBottom (c);
 
+        TRACE ("clientNewMaxSize %d %d %d %d", wc->x, wc->y, wc->width, wc->height);
+
         return ((wc->width <= c->size->max_width) && (wc->height <= c->size->max_height));
     }
 
