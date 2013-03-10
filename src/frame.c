@@ -121,7 +121,13 @@ frameTop (Client * c)
 
     g_return_val_if_fail (c != NULL, 0);
     if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-        && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN))
+        && !(FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+            || (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED | CLIENT_FLAG_MAXIMIZED_VERT)
+                && c->screen_info->params->titleless_maximize
+                && c->screen_info->params->borderless_maximize
+                )
+            )
+        )
     {
         return c->screen_info->title[TITLE_3][ACTIVE].height;
     }
