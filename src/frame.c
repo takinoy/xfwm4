@@ -121,13 +121,9 @@ frameTop (Client * c)
 
     g_return_val_if_fail (c != NULL, 0);
     if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-        && !(FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
-            || (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED | CLIENT_FLAG_MAXIMIZED_VERT)
-                && c->screen_info->params->titleless_maximize
-                && c->screen_info->params->borderless_maximize
-                )
-            )
-        )
+        && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+                && c->screen_info->params->titleless_maximize))
     {
         return c->screen_info->title[TITLE_3][ACTIVE].height;
     }
@@ -960,8 +956,26 @@ frameDrawWin (Client * c)
         }
     }
 
+    top_width = frameWidth (c) - frameTopLeftWidth (c, state) - frameTopRightWidth (c, state);
+    bottom_width = frameWidth (c) -
+        screen_info->corners[CORNER_BOTTOM_LEFT][state].width -
+        screen_info->corners[CORNER_BOTTOM_RIGHT][state].width;
+    left_height = frameHeight (c) - frameTop (c) -
+        screen_info->corners[CORNER_BOTTOM_LEFT][state].height;
+    right_height = frameHeight (c) - frameTop (c) -
+        screen_info->corners[CORNER_BOTTOM_RIGHT][state].height;
+
+    xfwmPixmapInit (screen_info, &frame_pix.pm_title);
+    xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_TOP]);
+    xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_BOTTOM]);
+    xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_LEFT]);
+    xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_RIGHT]);
+
+    /* test if the title have to be displayed */
     if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-        && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN))
+    && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+    && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
     {
         /* First, hide the buttons that we don't have... */
         for (i = 0; i < BUTTON_COUNT; i++)
@@ -1048,28 +1062,33 @@ frameDrawWin (Client * c)
         left = left - 2 * screen_info->params->button_spacing;
         right = x;
 
-        top_width = frameWidth (c) - frameTopLeftWidth (c, state) - frameTopRightWidth (c, state);
-        bottom_width = frameWidth (c) -
-            screen_info->corners[CORNER_BOTTOM_LEFT][state].width -
-            screen_info->corners[CORNER_BOTTOM_RIGHT][state].width;
-        left_height = frameHeight (c) - frameTop (c) -
-            screen_info->corners[CORNER_BOTTOM_LEFT][state].height;
-        right_height = frameHeight (c) - frameTop (c) -
-            screen_info->corners[CORNER_BOTTOM_RIGHT][state].height;
+    /* Show the title */
+    frameCreateTitlePixmap (c, state, left, right, &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
+    xfwmWindowSetBG (&c->title, &frame_pix.pm_title);
+    xfwmWindowShow (&c->title,
+        frameTopLeftWidth (c, state), 0, top_width,
+        frameTop (c), (requires_clearing | width_changed));
+    }
+    else
+    {
+        /* hide the title and buttons */
+        if (xfwmWindowVisible (&c->title))
+        {
+            xfwmWindowHide (&c->title);
+        }
+        for (i = 0; i < BUTTON_COUNT; i++)
+        {
+            if (MYWINDOW_XWINDOW (c->buttons[i]) && xfwmWindowVisible (&c->buttons[i]))
+            {
+                xfwmWindowHide (&c->buttons[i]);
+            }
+        }
+    }
 
-        xfwmPixmapInit (screen_info, &frame_pix.pm_title);
-        xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_TOP]);
-        xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_BOTTOM]);
-        xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_LEFT]);
-        xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_RIGHT]);
-
-        /* The title is always visible */
-        frameCreateTitlePixmap (c, state, left, right, &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
-        xfwmWindowSetBG (&c->title, &frame_pix.pm_title);
-        xfwmWindowShow (&c->title,
-            frameTopLeftWidth (c, state), 0, top_width,
-            frameTop (c), (requires_clearing | width_changed));
-
+    /* test if the borders have to be displayed */
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
+    && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN))
+    {
         /* Corners are never resized, we need to update them separately */
         if (requires_clearing)
         {
@@ -1179,19 +1198,9 @@ frameDrawWin (Client * c)
                 requires_clearing);
         }
         frameSetShape (c, state, &frame_pix, button_x);
-
-        xfwmPixmapFree (&frame_pix.pm_title);
-        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_TOP]);
-        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_BOTTOM]);
-        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_LEFT]);
-        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_RIGHT]);
     }
     else
     {
-        if (xfwmWindowVisible (&c->title))
-        {
-            xfwmWindowHide (&c->title);
-        }
         for (i = 0; i < 4; i++)
         {
             if (MYWINDOW_XWINDOW (c->sides[i]) && xfwmWindowVisible (&c->sides[i]))
@@ -1206,15 +1215,13 @@ frameDrawWin (Client * c)
                 xfwmWindowHide (&c->corners[i]);
             }
         }
-        for (i = 0; i < BUTTON_COUNT; i++)
-        {
-            if (MYWINDOW_XWINDOW (c->buttons[i]) && xfwmWindowVisible (&c->buttons[i]))
-            {
-                xfwmWindowHide (&c->buttons[i]);
-            }
-        }
         frameSetShape (c, 0, NULL, 0);
     }
+        xfwmPixmapFree (&frame_pix.pm_title);
+        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_TOP]);
+        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_BOTTOM]);
+        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_LEFT]);
+        xfwmPixmapFree (&frame_pix.pm_sides[SIDE_RIGHT]);
 }
 
 static gboolean
