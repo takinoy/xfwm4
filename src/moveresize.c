@@ -1624,6 +1624,7 @@ clientResize (Client * c, int handle, XEvent * ev)
     XWindowChanges wc;
     MoveResizeData passdata;
     int w_orig, h_orig;
+    unsigned long configure_flags;
     Cursor cursor;
     gboolean g1, g2;
 
@@ -1752,9 +1753,17 @@ clientResize (Client * c, int handle, XEvent * ev)
     /* Set window opacity to its original value */
     clientSetOpacity (c, c->opacity, OPACITY_RESIZE, 0);
 
+    configure_flags = NO_CFG_FLAG;
+
     if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED) &&
         ((w_orig != c->width) || (h_orig != c->height)))
     {
+        if (c->screen_info->params->titleless_maximize)
+        {
+            /* force redraw titleless window when maximized and resized */
+            configure_flags = CFG_FORCE_REDRAW;
+        }
+
         clientRemoveMaximizeFlag (c);
     }
 
@@ -1762,7 +1771,7 @@ clientResize (Client * c, int handle, XEvent * ev)
     wc.y = c->y;
     wc.width = c->width;
     wc.height = c->height;
-    clientConfigure (c, &wc, CWX | CWY | CWHeight | CWWidth, NO_CFG_FLAG);
+    clientConfigure (c, &wc, CWX | CWY | CWHeight | CWWidth, configure_flags);
 #ifdef HAVE_XSYNC
     clientXSyncClearTimeout (c);
     c->xsync_waiting = FALSE;
