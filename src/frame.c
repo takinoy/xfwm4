@@ -872,15 +872,113 @@ frameSetShapeInput (Client * c)
 }
 
 static void
+frameDrawButtons (Client * c, int state, int *left, int *right, int button_x[BUTTON_COUNT])
+{
+    ScreenInfo *screen_info;
+    xfwmPixmap *my_pixmap;
+    gint x, button;
+    guint i, j;
+
+    TRACE ("entering frameDrawButtons");
+    TRACE ("drawing title for \"%s\" (0x%lx)", c->name, c->window);
+
+    screen_info = c->screen_info;
+
+    /* First, hide the buttons that we don't have... */
+    for (i = 0; i < BUTTON_COUNT; i++)
+    {
+        char b = getLetterFromButton (i, c);
+        if ((!b) || !strchr (screen_info->params->button_layout, b))
+        {
+            xfwmWindowHide (&c->buttons[i]);
+        }
+    }
+
+    /* Then, show the ones that we do have on left... */
+    x = frameLeft (c) + frameButtonOffset (c);
+    if (x < 0)
+    {
+        x = 0;
+    }
+    *right = frameWidth (c) - frameRight (c) - frameButtonOffset (c);
+    for (i = 0; i < strlen (screen_info->params->button_layout); i++)
+    {
+        button = getButtonFromLetter (screen_info->params->button_layout[i], c);
+        if (button == TITLE_SEPARATOR)
+        {
+            break;
+        }
+        else if (button >= 0)
+        {
+            if (x + screen_info->buttons[button][state].width + screen_info->params->button_spacing < *right)
+            {
+                my_pixmap = clientGetButtonPixmap (c, button, clientGetButtonState (c, button, state));
+                if (!xfwmPixmapNone(my_pixmap))
+                {
+                    xfwmWindowSetBG (&c->buttons[button], my_pixmap);
+                }
+                xfwmWindowShow (&c->buttons[button], x,
+                    (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
+                    screen_info->buttons[button][state].width,
+                    screen_info->buttons[button][state].height, TRUE);
+                button_x[button] = x;
+                x = x + screen_info->buttons[button][state].width +
+                    screen_info->params->button_spacing;
+            }
+            else
+            {
+                xfwmWindowHide (&c->buttons[button]);
+            }
+        }
+    }
+    *left = x + screen_info->params->button_spacing;
+
+    /* and those that we do have on right... */
+    x = frameWidth (c) - frameRight (c) + screen_info->params->button_spacing -
+        frameButtonOffset (c);
+    for (j = strlen (screen_info->params->button_layout) - 1; j >= i; j--)
+    {
+        button = getButtonFromLetter (screen_info->params->button_layout[j], c);
+        if (button == TITLE_SEPARATOR)
+        {
+            break;
+        }
+        else if (button >= 0)
+        {
+            if (x - screen_info->buttons[button][state].width - screen_info->params->button_spacing > *left)
+            {
+                my_pixmap = clientGetButtonPixmap (c, button, clientGetButtonState (c, button, state));
+                if (!xfwmPixmapNone(my_pixmap))
+                {
+                    xfwmWindowSetBG (&c->buttons[button], my_pixmap);
+                }
+                x = x - screen_info->buttons[button][state].width -
+                    screen_info->params->button_spacing;
+                xfwmWindowShow (&c->buttons[button], x,
+                    (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
+                    screen_info->buttons[button][state].width,
+                    screen_info->buttons[button][state].height, TRUE);
+                button_x[button] = x;
+            }
+            else
+            {
+                xfwmWindowHide (&c->buttons[button]);
+            }
+        }
+    }
+    *left = *left - 2 * screen_info->params->button_spacing;
+    *right = x;
+}
+
+static void
 frameDrawWin (Client * c)
 {
     ScreenInfo *screen_info;
     FramePixmap frame_pix;
-    xfwmPixmap *my_pixmap;
-    gint state, x, button, left, right;
+    gint state, left, right;
     gint top_width, bottom_width, left_height, right_height;
-    gint button_x[BUTTON_COUNT];
-    guint i, j;
+    gint button_x[BUTTON_COUNT] = {0};
+    guint i;
     gboolean requires_clearing;
     gboolean width_changed;
     gboolean height_changed;
@@ -977,97 +1075,14 @@ frameDrawWin (Client * c)
     && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
             && c->screen_info->params->titleless_maximize))
     {
-        /* First, hide the buttons that we don't have... */
-        for (i = 0; i < BUTTON_COUNT; i++)
-        {
-            char b = getLetterFromButton (i, c);
-            if ((!b) || !strchr (screen_info->params->button_layout, b))
-            {
-                xfwmWindowHide (&c->buttons[i]);
-            }
-        }
+        frameDrawButtons(c, state, &left, &right, button_x);
 
-        /* Then, show the ones that we do have on left... */
-        x = frameLeft (c) + frameButtonOffset (c);
-        if (x < 0)
-        {
-            x = 0;
-        }
-        right = frameWidth (c) - frameRight (c) - frameButtonOffset (c);
-        for (i = 0; i < strlen (screen_info->params->button_layout); i++)
-        {
-            button = getButtonFromLetter (screen_info->params->button_layout[i], c);
-            if (button == TITLE_SEPARATOR)
-            {
-                break;
-            }
-            else if (button >= 0)
-            {
-                if (x + screen_info->buttons[button][state].width + screen_info->params->button_spacing < right)
-                {
-                    my_pixmap = clientGetButtonPixmap (c, button, clientGetButtonState (c, button, state));
-                    if (!xfwmPixmapNone(my_pixmap))
-                    {
-                        xfwmWindowSetBG (&c->buttons[button], my_pixmap);
-                    }
-                    xfwmWindowShow (&c->buttons[button], x,
-                        (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
-                        screen_info->buttons[button][state].width,
-                        screen_info->buttons[button][state].height, TRUE);
-                    button_x[button] = x;
-                    x = x + screen_info->buttons[button][state].width +
-                        screen_info->params->button_spacing;
-                }
-                else
-                {
-                    xfwmWindowHide (&c->buttons[button]);
-                }
-            }
-        }
-        left = x + screen_info->params->button_spacing;
-
-        /* and those that we do have on right... */
-        x = frameWidth (c) - frameRight (c) + screen_info->params->button_spacing -
-            frameButtonOffset (c);
-        for (j = strlen (screen_info->params->button_layout) - 1; j >= i; j--)
-        {
-            button = getButtonFromLetter (screen_info->params->button_layout[j], c);
-            if (button == TITLE_SEPARATOR)
-            {
-                break;
-            }
-            else if (button >= 0)
-            {
-                if (x - screen_info->buttons[button][state].width - screen_info->params->button_spacing > left)
-                {
-                    my_pixmap = clientGetButtonPixmap (c, button, clientGetButtonState (c, button, state));
-                    if (!xfwmPixmapNone(my_pixmap))
-                    {
-                        xfwmWindowSetBG (&c->buttons[button], my_pixmap);
-                    }
-                    x = x - screen_info->buttons[button][state].width -
-                        screen_info->params->button_spacing;
-                    xfwmWindowShow (&c->buttons[button], x,
-                        (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
-                        screen_info->buttons[button][state].width,
-                        screen_info->buttons[button][state].height, TRUE);
-                    button_x[button] = x;
-                }
-                else
-                {
-                    xfwmWindowHide (&c->buttons[button]);
-                }
-            }
-        }
-        left = left - 2 * screen_info->params->button_spacing;
-        right = x;
-
-    /* Show the title */
-    frameCreateTitlePixmap (c, state, left, right, &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
-    xfwmWindowSetBG (&c->title, &frame_pix.pm_title);
-    xfwmWindowShow (&c->title,
-        frameTopLeftWidth (c, state), 0, top_width,
-        frameTop (c), (requires_clearing | width_changed));
+        /* Show the title */
+        frameCreateTitlePixmap (c, state, left, right, &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
+        xfwmWindowSetBG (&c->title, &frame_pix.pm_title);
+        xfwmWindowShow (&c->title,
+            frameTopLeftWidth (c, state), 0, top_width,
+            frameTop (c), (requires_clearing | width_changed));
     }
     else
     {
