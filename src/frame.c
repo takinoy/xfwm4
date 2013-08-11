@@ -70,7 +70,7 @@ frameDecorationTop (ScreenInfo *screen_info)
     TRACE ("entering frameDecorationTop");
 
     g_return_val_if_fail (screen_info != NULL, 0);
-    return screen_info->title[TITLE_3][ACTIVE].height;
+    return screen_info->title[TITLE_3][ACTIVE].height + screen_info->top[TITLE_3][ACTIVE].height;
 }
 
 int
@@ -114,6 +114,50 @@ frameRight (Client * c)
     return 0;
 }
 
+/* frame of the top border */
+int
+frameTopBorder (Client * c)
+{
+    TRACE ("entering frameTopBorder");
+
+    g_return_val_if_fail (c != NULL, 0);
+    if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
+        || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return 0;
+    }
+    /* test if top_3_active.xpm exist */
+    else if (!xfwmPixmapNone(&c->screen_info->top[3][ACTIVE]))
+    {
+        return c->screen_info->top[3][ACTIVE].height;
+    }
+    return c->screen_info->title[TITLE_3][ACTIVE].height / 10 + 1;
+}
+
+/* frame of the title without top border */
+int
+frameTitle (Client * c)
+{
+    TRACE ("entering frameTitle");
+
+    g_return_val_if_fail (c != NULL, 0);
+    if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
+        || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return 0;
+    }
+    else if (!xfwmPixmapNone(&c->screen_info->top[3][ACTIVE]))
+    {
+        return c->screen_info->title[TITLE_3][ACTIVE].height;
+    }
+    return c->screen_info->title[TITLE_3][ACTIVE].height - c->screen_info->title[TITLE_3][ACTIVE].height / 10 - 1;
+}
+
+/* frameTop = frameTopBorder + frameTitle */
 int
 frameTop (Client * c)
 {
@@ -121,11 +165,9 @@ frameTop (Client * c)
 
     g_return_val_if_fail (c != NULL, 0);
     if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-        && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
-        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-                && c->screen_info->params->titleless_maximize))
+        && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN))
     {
-        return c->screen_info->title[TITLE_3][ACTIVE].height;
+        return frameTopBorder (c) + frameTitle (c);
     }
     return 0;
 }
@@ -255,12 +297,40 @@ frameButtonOffset (Client *c)
     return c->screen_info->params->button_offset;
 }
 
+static int
+frameButtonY (Client *c, int state, int button)
+{
+    int y;
+
+    TRACE ("entering frameButtonY");
+
+    g_return_val_if_fail (c != NULL, 0);
+    y = (c->screen_info->top[TITLE_5][state].height + c->screen_info->title[TITLE_5][state].height - c->screen_info->buttons[button][state].height + 1) / 2;
+    if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+        && (c->screen_info->params->borderless_maximize))
+    {
+        /* show the button pixmap correctly */
+        if (!xfwmPixmapNone(&c->screen_info->top[3][state]))
+        {
+            return y - c->screen_info->top[TITLE_5][ACTIVE].height;
+        }
+        else
+        {
+            return y - c->screen_info->title[TITLE_5][ACTIVE].height / 10 - 1;
+        }
+    }
+    else
+    {
+        return y;
+    }
+}
+
 static void
-frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwmPixmap * title_pm, xfwmPixmap * top_pm)
+frameFillTopPixmap (Client * c, int state, int part, int x, int w, int h, xfwmPixmap * title_pm, xfwmPixmap * top_pm)
 {
     ScreenInfo *screen_info;
 
-    TRACE ("entering frameFillTitlePixmap");
+    TRACE ("entering frameFillTopPixmap");
 
     g_return_if_fail (c);
     g_return_if_fail (title_pm);
@@ -276,7 +346,23 @@ frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwm
     {
         xfwmPixmapFill (&screen_info->title[part][state], top_pm, x, 0, w, h);
     }
-    xfwmPixmapFill (&screen_info->title[part][state], title_pm, x, 0, w, frameTop (c));
+}
+
+static void
+frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwmPixmap * title_pm, xfwmPixmap * top_pm)
+{
+    ScreenInfo *screen_info;
+
+    TRACE ("entering frameFillTitlePixmap");
+
+    g_return_if_fail (c);
+    g_return_if_fail (title_pm);
+    g_return_if_fail (top_pm);
+
+    screen_info = c->screen_info;
+
+        frameFillTopPixmap (c, state, part, x, w, h, title_pm, top_pm);
+        xfwmPixmapFill (&screen_info->title[part][state], title_pm, x, 0, w, frameTitle (c));
 }
 
 static void
@@ -353,24 +439,11 @@ frameCreateTitlePixmap (Client * c, int state, int left, int right, xfwmPixmap *
          */
         title_height = logical_rect.height;
     }
-    title_y = voffset + (frameTop (c) - title_height) / 2;
-    if (title_y + title_height > frameTop (c))
-    {
-        title_y = MAX (0, frameTop (c) - title_height);
-    }
 
-    if (!xfwmPixmapNone(&screen_info->top[3][ACTIVE]))
-    {
-        top_height = screen_info->top[3][ACTIVE].height;
-    }
-    else
-    {
-        top_height = frameTop (c) / 10 + 1;
-        if (top_height > title_y - 1)
-        {
-             top_height = MAX (title_y - 1, 0);
-        }
-    }
+    top_height = frameTopBorder (c);
+
+    /* center the title in the frameTitle space (top border is not included) */
+    title_y = MAX (0, voffset + (frameTitle (c) - title_height - 2) / 2);
 
     w1 = 0;
     w2 = screen_info->title[TITLE_2][state].width;
@@ -433,7 +506,7 @@ frameCreateTitlePixmap (Client * c, int state, int left, int right, xfwmPixmap *
     }
 
     xfwmPixmapCreate (screen_info, top_pm, width, top_height);
-    xfwmPixmapCreate (screen_info, title_pm, width, frameTop (c));
+    xfwmPixmapCreate (screen_info, title_pm, width, frameTitle (c));
     gpixmap = gdk_pixmap_foreign_new (title_pm->pixmap);
     gdk_drawable_set_colormap (gpixmap, gdk_screen_get_rgb_colormap (screen_info->gscr));
     gc = gdk_gc_new (gpixmap);
@@ -706,24 +779,24 @@ frameSetShape (Client * c, int state, FramePixmap * frame_pix, int button_x[BUTT
         }
 
         if (xfwmWindowVisible (&c->corners[CORNER_TOP_LEFT]) &&
-            (screen_info->corners[CORNER_TOP_LEFT][state].height > frameHeight (c) - frameBottom (c) + 1))
+            (frameTop (c) > frameHeight (c) - frameBottom (c) + 1))
         {
             rect.x      = 0;
             rect.y      = frameHeight (c) - frameBottom (c) + 1;
             rect.width  = frameTopLeftWidth (c, state);
-            rect.height = screen_info->corners[CORNER_TOP_LEFT][state].height
+            rect.height = frameTop (c)
                            - (frameHeight (c) - frameBottom (c) + 1);
             XShapeCombineRectangles (display_info->dpy, MYWINDOW_XWINDOW (c->corners[CORNER_TOP_LEFT]),
                                      ShapeBounding, 0, 0, &rect, 1, ShapeSubtract, 0);
         }
 
         if (xfwmWindowVisible (&c->corners[CORNER_TOP_RIGHT]) &&
-            (screen_info->corners[CORNER_TOP_RIGHT][state].height > frameHeight (c) - frameBottom (c) + 1))
+            (frameTop (c) > frameHeight (c) - frameBottom (c) + 1))
         {
             rect.x      = 0;
             rect.y      = frameHeight (c) - frameBottom (c) + 1;
             rect.width  = frameTopRightWidth (c, state);
-            rect.height = screen_info->corners[CORNER_TOP_RIGHT][state].height
+            rect.height = frameTop (c)
                            - (frameHeight (c) - frameBottom (c) + 1);
             XShapeCombineRectangles (display_info->dpy, MYWINDOW_XWINDOW (c->corners[CORNER_TOP_RIGHT]),
                                      ShapeBounding, 0, 0, &rect, 1, ShapeSubtract, 0);
@@ -771,7 +844,7 @@ frameSetShape (Client * c, int state, FramePixmap * frame_pix, int button_x[BUTT
         if (xfwmWindowVisible (&c->title))
         {
             XShapeCombineShape (display_info->dpy, screen_info->shape_win, ShapeBounding,
-                                frameTopLeftWidth (c, state), 0,
+                                frameTopLeftWidth (c, state), frameTopBorder(c),
                                 MYWINDOW_XWINDOW (c->title), ShapeBounding, ShapeUnion);
         }
 
@@ -825,7 +898,7 @@ frameSetShape (Client * c, int state, FramePixmap * frame_pix, int button_x[BUTT
             if (xfwmWindowVisible (&c->buttons[i]))
             {
                 XShapeCombineShape (display_info->dpy, screen_info->shape_win, ShapeBounding, button_x[i],
-                                    (frameTop (c) - screen_info->buttons[i][state].height + 1) / 2,
+                                    frameTopBorder (c),
                                     MYWINDOW_XWINDOW (c->buttons[i]), ShapeBounding, ShapeUnion);
             }
         }
@@ -880,7 +953,6 @@ frameDrawButtons (Client * c, int state, int *left, int *right, int button_x[BUT
     guint i, j;
 
     TRACE ("entering frameDrawButtons");
-    TRACE ("drawing title for \"%s\" (0x%lx)", c->name, c->window);
 
     screen_info = c->screen_info;
 
@@ -918,7 +990,7 @@ frameDrawButtons (Client * c, int state, int *left, int *right, int button_x[BUT
                     xfwmWindowSetBG (&c->buttons[button], my_pixmap);
                 }
                 xfwmWindowShow (&c->buttons[button], x,
-                    (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
+                    frameButtonY (c, state, button),
                     screen_info->buttons[button][state].width,
                     screen_info->buttons[button][state].height, TRUE);
                 button_x[button] = x;
@@ -955,7 +1027,7 @@ frameDrawButtons (Client * c, int state, int *left, int *right, int button_x[BUT
                 x = x - screen_info->buttons[button][state].width -
                     screen_info->params->button_spacing;
                 xfwmWindowShow (&c->buttons[button], x,
-                    (frameTop (c) - screen_info->buttons[button][state].height + 1) / 2,
+                    frameButtonY (c, state, button),
                     screen_info->buttons[button][state].width,
                     screen_info->buttons[button][state].height, TRUE);
                 button_x[button] = x;
@@ -1054,6 +1126,9 @@ frameDrawWin (Client * c)
         }
     }
 
+    left = frameTopLeftWidth (c, state);
+    right = frameTopRightWidth (c, state);
+
     top_width = frameWidth (c) - frameTopLeftWidth (c, state) - frameTopRightWidth (c, state);
     bottom_width = frameWidth (c) -
         screen_info->corners[CORNER_BOTTOM_LEFT][state].width -
@@ -1070,10 +1145,7 @@ frameDrawWin (Client * c)
     xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_RIGHT]);
 
     /* test if the title have to be displayed */
-    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-    && !FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
-    && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && c->screen_info->params->titleless_maximize))
+    if (frameTitle (c) > 0)
     {
         frameDrawButtons(c, state, &left, &right, button_x);
 
@@ -1081,8 +1153,8 @@ frameDrawWin (Client * c)
         frameCreateTitlePixmap (c, state, left, right, &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
         xfwmWindowSetBG (&c->title, &frame_pix.pm_title);
         xfwmWindowShow (&c->title,
-            frameTopLeftWidth (c, state), 0, top_width,
-            frameTop (c), (requires_clearing | width_changed));
+            frameTopLeftWidth (c, state), frameTopBorder (c), top_width,
+            frameTitle (c), (requires_clearing | width_changed));
     }
     else
     {
@@ -1123,7 +1195,6 @@ frameDrawWin (Client * c)
             xfwmWindowHide (&c->sides[SIDE_LEFT]);
             xfwmWindowHide (&c->sides[SIDE_RIGHT]);
             xfwmWindowHide (&c->sides[SIDE_BOTTOM]);
-            xfwmWindowHide (&c->sides[SIDE_TOP]);
             xfwmWindowHide (&c->corners[CORNER_TOP_LEFT]);
             xfwmWindowHide (&c->corners[CORNER_TOP_RIGHT]);
             xfwmWindowHide (&c->corners[CORNER_BOTTOM_LEFT]);
@@ -1176,8 +1247,8 @@ frameDrawWin (Client * c)
             {
                 xfwmWindowSetBG (&c->sides[SIDE_TOP], &frame_pix.pm_sides[SIDE_TOP]);
                 xfwmWindowShow (&c->sides[SIDE_TOP],
-                    screen_info->corners[CORNER_TOP_LEFT][state].width,
-                    0, top_width, frame_pix.pm_sides[SIDE_TOP].height,
+                    frameTopLeftWidth (c, state),
+                    0, top_width, frameTopBorder (c),
                     (requires_clearing | width_changed));
             }
             else
@@ -1187,13 +1258,13 @@ frameDrawWin (Client * c)
 
             xfwmWindowShow (&c->corners[CORNER_TOP_LEFT], 0, 0,
                 frameTopLeftWidth (c, state),
-                screen_info->corners[CORNER_TOP_LEFT][state].height,
+                frameTop (c),
                 requires_clearing);
 
             xfwmWindowShow (&c->corners[CORNER_TOP_RIGHT],
                 frameWidth (c) - frameTopRightWidth (c, state),
                 0, frameTopRightWidth (c, state),
-                screen_info->corners[CORNER_TOP_RIGHT][state].height,
+                frameTop (c),
                 requires_clearing);
 
             xfwmWindowShow (&c->corners[CORNER_BOTTOM_LEFT], 0,
