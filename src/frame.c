@@ -124,7 +124,7 @@ frameTopBorder (Client * c)
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
         || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
         || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && c->screen_info->params->titleless_maximize))
+            && c->screen_info->params->borderless_maximize))
     {
         return 0;
     }
@@ -361,8 +361,12 @@ frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwm
 
     screen_info = c->screen_info;
 
+    if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->borderless_maximize))
+    {
         frameFillTopPixmap (c, state, part, x, w, h, title_pm, top_pm);
-        xfwmPixmapFill (&screen_info->title[part][state], title_pm, x, 0, w, frameTitle (c));
+    }
+    xfwmPixmapFill (&screen_info->title[part][state], title_pm, x, 0, w, frameTitle (c));
 }
 
 static void
@@ -505,7 +509,6 @@ frameCreateTitlePixmap (Client * c, int state, int left, int right, xfwmPixmap *
         }
     }
 
-    xfwmPixmapCreate (screen_info, top_pm, width, top_height);
     xfwmPixmapCreate (screen_info, title_pm, width, frameTitle (c));
     gpixmap = gdk_pixmap_foreign_new (title_pm->pixmap);
     gdk_drawable_set_colormap (gpixmap, gdk_screen_get_rgb_colormap (screen_info->gscr));
@@ -1144,6 +1147,11 @@ frameDrawWin (Client * c)
     xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_LEFT]);
     xfwmPixmapInit (screen_info, &frame_pix.pm_sides[SIDE_RIGHT]);
 
+    if (frameTopBorder (c) > 0)
+    {
+    xfwmPixmapCreate (screen_info, &frame_pix.pm_sides[SIDE_TOP], top_width, frameTopBorder (c));
+    }
+
     /* test if the title have to be displayed */
     if (frameTitle (c) > 0)
     {
@@ -1158,6 +1166,13 @@ frameDrawWin (Client * c)
     }
     else
     {
+        if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+        && (c->screen_info->params->borderless_maximize)))
+        {
+            frameFillTopPixmap (c, state, TITLE_1, 0, top_width / 2, frameTopBorder (c), &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
+            frameFillTopPixmap (c, state, TITLE_5, top_width / 2, top_width -top_width / 2, frameTopBorder (c), &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
+        }
+
         /* hide the title and buttons */
         if (xfwmWindowVisible (&c->title))
         {
@@ -1195,6 +1210,7 @@ frameDrawWin (Client * c)
             xfwmWindowHide (&c->sides[SIDE_LEFT]);
             xfwmWindowHide (&c->sides[SIDE_RIGHT]);
             xfwmWindowHide (&c->sides[SIDE_BOTTOM]);
+            xfwmWindowHide (&c->sides[SIDE_TOP]);
             xfwmWindowHide (&c->corners[CORNER_TOP_LEFT]);
             xfwmWindowHide (&c->corners[CORNER_TOP_RIGHT]);
             xfwmWindowHide (&c->corners[CORNER_BOTTOM_LEFT]);
