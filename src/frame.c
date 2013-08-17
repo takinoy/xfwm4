@@ -791,8 +791,8 @@ frameSetShape (Client * c, int state, FramePixmap * frame_pix, int button_x[BUTT
         if (xfwmWindowVisible (&c->sides[SIDE_TOP]))
         {
             XShapeCombineShape (display_info->dpy, screen_info->shape_win, ShapeBounding,
-                                screen_info->corners[CORNER_BOTTOM_LEFT][state].width,
-                                frameTop (c) - frameBottom (c),
+                                frameTopLeftWidth (c, state),
+                                0,
                                 MYWINDOW_XWINDOW (c->sides[SIDE_TOP]), ShapeBounding, ShapeUnion);
         }
 
