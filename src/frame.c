@@ -70,7 +70,7 @@ frameDecorationTop (ScreenInfo *screen_info)
     TRACE ("entering frameDecorationTop");
 
     g_return_val_if_fail (screen_info != NULL, 0);
-    return screen_info->title[TITLE_3][ACTIVE].height + screen_info->top[TITLE_3][ACTIVE].height;
+    return screen_info->title[TITLE_3][ACTIVE].height + screen_info->params->top_border_height;
 }
 
 int
@@ -128,7 +128,7 @@ frameTopBorder (Client * c)
     {
         return 0;
     }
-    return c->screen_info->top[3][ACTIVE].height;
+    return c->screen_info->params->top_border_height;
 }
 
 /* frame of the title without top border */
@@ -296,12 +296,12 @@ frameButtonY (Client *c, int state, int button)
     TRACE ("entering frameButtonY");
 
     g_return_val_if_fail (c != NULL, 0);
-    y = (c->screen_info->top[TITLE_5][state].height + c->screen_info->title[TITLE_5][state].height - c->screen_info->buttons[button][state].height + 1) / 2;
+    y = (c->screen_info->params->top_border_height + c->screen_info->title[TITLE_5][state].height - c->screen_info->buttons[button][state].height + 1) / 2;
     if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
         && c->screen_info->params->borderless_maximize)
     {
         /* show the button pixmap correctly */
-        return y - c->screen_info->top[TITLE_5][ACTIVE].height;
+        return y - c->screen_info->params->top_border_height;
     }
     else
     {
@@ -1221,18 +1221,11 @@ frameDrawWin (Client * c)
                 frameHeight (c) - frameBottom (c), bottom_width, frameBottom (c),
                 (requires_clearing | width_changed));
 
-            if (!xfwmPixmapNone(&frame_pix.pm_sides[SIDE_TOP]))
-            {
-                xfwmWindowSetBG (&c->sides[SIDE_TOP], &frame_pix.pm_sides[SIDE_TOP]);
-                xfwmWindowShow (&c->sides[SIDE_TOP],
-                    frameTopLeftWidth (c, state),
-                    0, top_width, frameTopBorder (c),
-                    (requires_clearing | width_changed));
-            }
-            else
-            {
-                xfwmWindowHide (&c->sides[SIDE_TOP]);
-            }
+            xfwmWindowSetBG (&c->sides[SIDE_TOP], &frame_pix.pm_sides[SIDE_TOP]);
+            xfwmWindowShow (&c->sides[SIDE_TOP],
+                frameTopLeftWidth (c, state),
+                0, top_width, frameTopBorder (c),
+                (requires_clearing | width_changed));
 
             xfwmWindowShow (&c->corners[CORNER_TOP_LEFT], 0, 0,
                 frameTopLeftWidth (c, state),
