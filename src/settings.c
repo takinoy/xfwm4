@@ -400,7 +400,7 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
     gchar *theme;
     const gchar *font;
     PangoFontDescription *desc;
-    guint i, j;
+    guint i, j, h;
 
     widget = myScreenGetGtkWidget (screen_info);
     display_info = screen_info->display_info;
@@ -512,19 +512,38 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
             xfwmPixmapLoad (screen_info, &screen_info->buttons[i][j], theme, imagename, colsym);
         }
     }
-    for (i = 0; i < TITLE_COUNT; i++)
+
+    /* test if top-3-active.xpm exist */
+    if (fopen (g_build_filename (theme, "top-3-active.xpm", NULL), "rb"))
     {
-        g_snprintf(imagename, sizeof (imagename), "title-%d-active", i + 1);
-        xfwmPixmapLoad (screen_info, &screen_info->title[i][ACTIVE], theme, imagename, colsym);
+        for (i = 0; i < TITLE_COUNT; i++)
+        {
+            g_snprintf(imagename, sizeof (imagename), "title-%d-active", i + 1);
+            xfwmPixmapLoad (screen_info, &screen_info->title[i][ACTIVE], theme, imagename, colsym);
 
-        g_snprintf(imagename, sizeof (imagename), "title-%d-inactive", i + 1);
-        xfwmPixmapLoad (screen_info, &screen_info->title[i][INACTIVE], theme, imagename, colsym);
+            g_snprintf(imagename, sizeof (imagename), "title-%d-inactive", i + 1);
+            xfwmPixmapLoad (screen_info, &screen_info->title[i][INACTIVE], theme, imagename, colsym);
 
-        g_snprintf(imagename, sizeof (imagename), "top-%d-active", i + 1);
-        xfwmPixmapLoad (screen_info, &screen_info->top[i][ACTIVE], theme, imagename, colsym);
+            g_snprintf(imagename, sizeof (imagename), "top-%d-active", i + 1);
+            xfwmPixmapLoad (screen_info, &screen_info->top[i][ACTIVE], theme, imagename, colsym);
 
-        g_snprintf(imagename, sizeof (imagename), "top-%d-inactive", i + 1);
-        xfwmPixmapLoad (screen_info, &screen_info->top[i][INACTIVE], theme, imagename, colsym);
+            g_snprintf(imagename, sizeof (imagename), "top-%d-inactive", i + 1);
+            xfwmPixmapLoad (screen_info, &screen_info->top[i][INACTIVE], theme, imagename, colsym);
+        }
+    }
+    else
+    {
+        /* sets the height of top border from title-3-active */
+        h = gdk_pixbuf_get_height (xfwmPixbufLoad (theme, "title-3-active", colsym)) / 10 + 1;
+        for (i = 0; i < TITLE_COUNT; i++)
+        {
+            g_snprintf(imagename, sizeof (imagename), "title-%d-active", i + 1);
+            xfwmPixmapSplit (screen_info, &screen_info->top[i][ACTIVE], h, &screen_info->title[i][ACTIVE], theme, imagename, colsym);
+
+            g_snprintf(imagename, sizeof (imagename), "title-%d-inactive", i + 1);
+            xfwmPixmapSplit (screen_info, &screen_info->top[i][INACTIVE], h, &screen_info->title[i][INACTIVE], theme, imagename, colsym);
+        }
+
     }
 
     screen_info->box_gc = createGC (screen_info, "#FFFFFF", GXxor, NULL, 2, TRUE);

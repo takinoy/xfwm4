@@ -932,20 +932,13 @@ xfwmPixmapRenderGdkPixbuf (xfwmPixmap * pm, GdkPixbuf *pixbuf)
     return TRUE;
 }
 
-gboolean
-xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
+GdkPixbuf *
+xfwmPixbufLoad (const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
 {
     gchar *filename;
     gchar *filexpm;
     GdkPixbuf *pixbuf;
 
-    TRACE ("entering xfwmPixmapLoad");
-
-    g_return_val_if_fail (pm != NULL, FALSE);
-    g_return_val_if_fail (dir != NULL, FALSE);
-    g_return_val_if_fail (file != NULL, FALSE);
-
-    xfwmPixmapInit (screen_info, pm);
     /*
      * Always try to load the XPM first, using our own routine
      * that supports XPM color symbol susbstitution (used to
@@ -959,15 +952,12 @@ xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, co
 
     /* Compose with other image formats, if any available. */
     pixbuf = xfwmPixmapCompose (pixbuf, dir, file);
-    if (!pixbuf)
-    {
-        /*
-         * Cannot find a suitable image format for some part,
-         * it's not critical though as most themes are missing
-         * buttons
-         */
-        return FALSE;
-    }
+    return pixbuf;
+}
+
+static void
+pixmap_create_from_pixbuf (ScreenInfo * screen_info, GdkPixbuf *pixbuf, xfwmPixmap * pm)
+{
     xfwmPixmapCreate (screen_info, pm,
                       gdk_pixbuf_get_width (pixbuf),
                       gdk_pixbuf_get_height (pixbuf));
@@ -977,6 +967,72 @@ xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, co
     xfwmPixmapRefreshPict (pm);
 #endif
     g_object_unref (pixbuf);
+}
+
+gboolean
+xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
+{
+    GdkPixbuf *pixbuf;
+
+    TRACE ("entering xfwmPixmapLoad");
+
+    g_return_val_if_fail (pm != NULL, FALSE);
+    g_return_val_if_fail (dir != NULL, FALSE);
+    g_return_val_if_fail (file != NULL, FALSE);
+
+    xfwmPixmapInit (screen_info, pm);
+    pixbuf = xfwmPixbufLoad (dir, file, cs);
+    if (!pixbuf)
+    {
+        /*
+         * Cannot find a suitable image format for some part,
+         * it's not critical though as most themes are missing
+         * buttons
+         */
+        return FALSE;
+    }
+
+    pixmap_create_from_pixbuf (screen_info, pixbuf, pm);
+
+    return TRUE;
+}
+
+gboolean
+xfwmPixmapSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * pmB, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
+{
+    GdkPixbuf *pixbuf;
+    GdkPixbuf *pixbufA;
+    GdkPixbuf *pixbufB;
+
+    TRACE ("entering xfwmPixmapSplit");
+
+    g_return_val_if_fail (pmA != NULL, FALSE);
+    g_return_val_if_fail (pmB != NULL, FALSE);
+    g_return_val_if_fail (dir != NULL, FALSE);
+    g_return_val_if_fail (file != NULL, FALSE);
+
+    xfwmPixmapInit (screen_info, pmA);
+    xfwmPixmapInit (screen_info, pmB);
+    pixbuf = xfwmPixbufLoad (dir, file, cs);
+
+    if (!pixbuf)
+    {
+        /*
+         * Cannot find a suitable image format for some part,
+         * it's not critical though as most themes are missing
+         * buttons
+         */
+        return FALSE;
+    }
+
+    pixbufA = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), h);
+    pixbufB = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h);
+
+    gdk_pixbuf_copy_area (pixbuf, 0, 0, gdk_pixbuf_get_width (pixbuf), h, pixbufA, 0, 0);
+    gdk_pixbuf_copy_area (pixbuf, 0, h, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h, pixbufB, 0, 0);
+
+    pixmap_create_from_pixbuf (screen_info, pixbufA, pmA);
+    pixmap_create_from_pixbuf (screen_info, pixbufB, pmB);
 
     return TRUE;
 }

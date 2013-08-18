@@ -57,11 +57,19 @@ struct _xfwmPixmap
 
 gboolean                 xfwmPixmapRenderGdkPixbuf              (xfwmPixmap *,
                                                                  GdkPixbuf *);
+GdkPixbuf *              xfwmPixbufLoad                         (const gchar *,
+                                                                  const gchar *,
+                                                                  xfwmColorSymbol *);
 gboolean                 xfwmPixmapLoad                         (ScreenInfo *,
                                                                  xfwmPixmap *,
                                                                  const gchar *,
                                                                  const gchar *,
                                                                  xfwmColorSymbol *);
+gboolean                 xfwmPixmapSplit                        (ScreenInfo * screen_info,
+                                                                 xfwmPixmap * pmA, int h,
+                                                                 xfwmPixmap * pmB, const
+                                                                 gchar * dir, const gchar *
+                                                                 file, xfwmColorSymbol * cs);
 void                     xfwmPixmapCreate                       (ScreenInfo *,
                                                                  xfwmPixmap *,
                                                                  gint,
