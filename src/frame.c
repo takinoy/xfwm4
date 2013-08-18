@@ -128,12 +128,7 @@ frameTopBorder (Client * c)
     {
         return 0;
     }
-    /* test if top_3_active.xpm exist */
-    else if (!xfwmPixmapNone(&c->screen_info->top[3][ACTIVE]))
-    {
-        return c->screen_info->top[3][ACTIVE].height;
-    }
-    return c->screen_info->title[TITLE_3][ACTIVE].height / 10 + 1;
+    return c->screen_info->top[3][ACTIVE].height;
 }
 
 /* frame of the title without top border */
@@ -150,11 +145,7 @@ frameTitle (Client * c)
     {
         return 0;
     }
-    else if (!xfwmPixmapNone(&c->screen_info->top[3][ACTIVE]))
-    {
-        return c->screen_info->title[TITLE_3][ACTIVE].height;
-    }
-    return c->screen_info->title[TITLE_3][ACTIVE].height - c->screen_info->title[TITLE_3][ACTIVE].height / 10 - 1;
+    return c->screen_info->title[TITLE_3][ACTIVE].height;
 }
 
 /* frameTop = frameTopBorder + frameTitle */
@@ -307,44 +298,14 @@ frameButtonY (Client *c, int state, int button)
     g_return_val_if_fail (c != NULL, 0);
     y = (c->screen_info->top[TITLE_5][state].height + c->screen_info->title[TITLE_5][state].height - c->screen_info->buttons[button][state].height + 1) / 2;
     if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-        && (c->screen_info->params->borderless_maximize))
+        && c->screen_info->params->borderless_maximize)
     {
         /* show the button pixmap correctly */
-        if (!xfwmPixmapNone(&c->screen_info->top[3][state]))
-        {
-            return y - c->screen_info->top[TITLE_5][ACTIVE].height;
-        }
-        else
-        {
-            return y - c->screen_info->title[TITLE_5][ACTIVE].height / 10 - 1;
-        }
+        return y - c->screen_info->top[TITLE_5][ACTIVE].height;
     }
     else
     {
         return y;
-    }
-}
-
-static void
-frameFillTopPixmap (Client * c, int state, int part, int x, int w, int h, xfwmPixmap * title_pm, xfwmPixmap * top_pm)
-{
-    ScreenInfo *screen_info;
-
-    TRACE ("entering frameFillTopPixmap");
-
-    g_return_if_fail (c);
-    g_return_if_fail (title_pm);
-    g_return_if_fail (top_pm);
-
-    screen_info = c->screen_info;
-
-    if (!xfwmPixmapNone(&screen_info->top[part][state]))
-    {
-        xfwmPixmapFill (&screen_info->top[part][state], top_pm, x, 0, w, h);
-    }
-    else
-    {
-        xfwmPixmapFill (&screen_info->title[part][state], top_pm, x, 0, w, h);
     }
 }
 
@@ -362,9 +323,9 @@ frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwm
     screen_info = c->screen_info;
 
     if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && c->screen_info->params->borderless_maximize))
+        && c->screen_info->params->borderless_maximize))
     {
-        frameFillTopPixmap (c, state, part, x, w, h, title_pm, top_pm);
+        xfwmPixmapFill (&screen_info->top[part][state], top_pm, x, 0, w, h);
     }
     xfwmPixmapFill (&screen_info->title[part][state], title_pm, x, 0, w, frameTitle (c));
 }
@@ -1166,11 +1127,12 @@ frameDrawWin (Client * c)
     }
     else
     {
-        if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-        && (c->screen_info->params->borderless_maximize)))
+        /* hide title but display top border */
+        if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && !c->screen_info->params->borderless_maximize)
         {
-            frameFillTopPixmap (c, state, TITLE_1, 0, top_width / 2, frameTopBorder (c), &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
-            frameFillTopPixmap (c, state, TITLE_5, top_width / 2, top_width -top_width / 2, frameTopBorder (c), &frame_pix.pm_title, &frame_pix.pm_sides[SIDE_TOP]);
+            xfwmPixmapFill (&c->screen_info->top[TITLE_1][state], &frame_pix.pm_sides[SIDE_TOP], 0, 0, top_width / 2, frameTopBorder (c));
+            xfwmPixmapFill (&c->screen_info->top[TITLE_5][state], &frame_pix.pm_sides[SIDE_TOP], top_width / 2, 0, top_width - top_width / 2, frameTopBorder (c));
         }
 
         /* hide the title and buttons */
