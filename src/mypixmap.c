@@ -1006,13 +1006,10 @@ xfwmPixmapSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * 
 
     TRACE ("entering xfwmPixmapSplit");
 
-    g_return_val_if_fail (pmA != NULL, FALSE);
-    g_return_val_if_fail (pmB != NULL, FALSE);
+    g_return_val_if_fail (pmA != NULL && pmB != NULL, FALSE);
     g_return_val_if_fail (dir != NULL, FALSE);
     g_return_val_if_fail (file != NULL, FALSE);
 
-    xfwmPixmapInit (screen_info, pmA);
-    xfwmPixmapInit (screen_info, pmB);
     pixbuf = xfwmPixbufLoad (dir, file, cs);
 
     if (!pixbuf)
@@ -1025,14 +1022,20 @@ xfwmPixmapSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * 
         return FALSE;
     }
 
-    pixbufA = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), h);
-    pixbufB = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h);
-
-    gdk_pixbuf_copy_area (pixbuf, 0, 0, gdk_pixbuf_get_width (pixbuf), h, pixbufA, 0, 0);
-    gdk_pixbuf_copy_area (pixbuf, 0, h, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h, pixbufB, 0, 0);
-
-    pixmap_create_from_pixbuf (screen_info, pixbufA, pmA);
-    pixmap_create_from_pixbuf (screen_info, pixbufB, pmB);
+    if (pmA != NULL)
+    {
+        xfwmPixmapInit (screen_info, pmA);
+        pixbufA = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), h);
+        gdk_pixbuf_copy_area (pixbuf, 0, 0, gdk_pixbuf_get_width (pixbuf), h, pixbufA, 0, 0);
+        pixmap_create_from_pixbuf (screen_info, pixbufA, pmA);
+    }
+    if (pmB != NULL)
+    {
+        xfwmPixmapInit (screen_info, pmB);
+        pixbufB = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h);
+        gdk_pixbuf_copy_area (pixbuf, 0, h, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h, pixbufB, 0, 0);
+        pixmap_create_from_pixbuf (screen_info, pixbufB, pmB);
+    }
 
     return TRUE;
 }
