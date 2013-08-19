@@ -124,7 +124,7 @@ frameTopBorder (Client * c)
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
         || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
         || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && c->screen_info->params->borderless_maximize))
+            && !c->screen_info->params->top_border_maximize))
     {
         return 0;
     }
@@ -298,7 +298,7 @@ frameButtonY (Client *c, int state, int button)
     g_return_val_if_fail (c != NULL, 0);
     y = (c->screen_info->params->top_border_height + c->screen_info->title[TITLE_5][state].height - c->screen_info->buttons[button][state].height + 1) / 2;
     if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-        && c->screen_info->params->borderless_maximize)
+        && !c->screen_info->params->top_border_maximize)
     {
         /* show the button pixmap correctly */
         return y - c->screen_info->params->top_border_height;
@@ -323,7 +323,7 @@ frameFillTitlePixmap (Client * c, int state, int part, int x, int w, int h, xfwm
     screen_info = c->screen_info;
 
     if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-        && c->screen_info->params->borderless_maximize))
+            && !c->screen_info->params->top_border_maximize))
     {
         xfwmPixmapFill (&screen_info->top[part][state], top_pm, x, 0, w, h);
     }
@@ -1129,7 +1129,7 @@ frameDrawWin (Client * c)
     {
         /* hide title but display top border */
         if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && !c->screen_info->params->borderless_maximize)
+            && c->screen_info->params->top_border_maximize)
         {
             xfwmPixmapFill (&c->screen_info->top[TITLE_1][state], &frame_pix.pm_sides[SIDE_TOP], 0, 0, top_width / 2, frameTopBorder (c));
             xfwmPixmapFill (&c->screen_info->top[TITLE_5][state], &frame_pix.pm_sides[SIDE_TOP], top_width / 2, 0, top_width - top_width / 2, frameTopBorder (c));
@@ -1167,12 +1167,24 @@ frameDrawWin (Client * c)
         }
 
         if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && !c->screen_info->params->top_border_maximize)
+        {
+            xfwmWindowHide (&c->sides[SIDE_TOP]);
+        }
+        else
+        {
+            xfwmWindowSetBG (&c->sides[SIDE_TOP], &frame_pix.pm_sides[SIDE_TOP]);
+            xfwmWindowShow (&c->sides[SIDE_TOP],
+            frameTopLeftWidth (c, state),
+            0, top_width, frameTopBorder (c),
+            (requires_clearing | width_changed));
+        }
+        if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
             && (c->screen_info->params->borderless_maximize))
         {
             xfwmWindowHide (&c->sides[SIDE_LEFT]);
             xfwmWindowHide (&c->sides[SIDE_RIGHT]);
             xfwmWindowHide (&c->sides[SIDE_BOTTOM]);
-            xfwmWindowHide (&c->sides[SIDE_TOP]);
             xfwmWindowHide (&c->corners[CORNER_TOP_LEFT]);
             xfwmWindowHide (&c->corners[CORNER_TOP_RIGHT]);
             xfwmWindowHide (&c->corners[CORNER_BOTTOM_LEFT]);
@@ -1208,7 +1220,6 @@ frameDrawWin (Client * c)
                     frameWidth (c) - frameRight (c), frameTop (c), frameRight (c),
                     right_height, (requires_clearing | height_changed));
             }
-
             xfwmPixmapCreate (screen_info, &frame_pix.pm_sides[SIDE_BOTTOM],
                 bottom_width, frameBottom (c));
             xfwmPixmapFill (&screen_info->sides[SIDE_BOTTOM][state],
@@ -1219,12 +1230,6 @@ frameDrawWin (Client * c)
             xfwmWindowShow (&c->sides[SIDE_BOTTOM],
                 screen_info->corners[CORNER_BOTTOM_LEFT][state].width,
                 frameHeight (c) - frameBottom (c), bottom_width, frameBottom (c),
-                (requires_clearing | width_changed));
-
-            xfwmWindowSetBG (&c->sides[SIDE_TOP], &frame_pix.pm_sides[SIDE_TOP]);
-            xfwmWindowShow (&c->sides[SIDE_TOP],
-                frameTopLeftWidth (c, state),
-                0, top_width, frameTopBorder (c),
                 (requires_clearing | width_changed));
 
             xfwmWindowShow (&c->corners[CORNER_TOP_LEFT], 0, 0,
