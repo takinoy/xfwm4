@@ -675,6 +675,7 @@ loadKeyBindings (ScreenInfo *screen_info)
 gboolean
 loadSettings (ScreenInfo *screen_info)
 {
+    guint i;
     const gchar *value;
     Settings rc[] = {
         /* Do not change the order of the following parameters */
@@ -769,6 +770,7 @@ loadSettings (ScreenInfo *screen_info)
         {"title_vertical_offset_active", NULL, G_TYPE_INT, TRUE},
         {"title_vertical_offset_inactive", NULL, G_TYPE_INT, TRUE},
         {"top_border_height", NULL, G_TYPE_INT, FALSE},
+        {"top_border_maximize", NULL, G_TYPE_BOOLEAN, FALSE},
         {"toggle_workspaces", NULL, G_TYPE_BOOLEAN, TRUE},
         {"unredirect_overlays", NULL, G_TYPE_BOOLEAN, TRUE},
         {"urgent_blink", NULL, G_TYPE_BOOLEAN, TRUE},
@@ -929,6 +931,23 @@ loadSettings (ScreenInfo *screen_info)
     if (screen_info->workspace_count == 0)
     {
         workspaceSetCount (screen_info, (guint) MAX (getIntValue ("workspace_count", rc), 1));
+    }
+
+    for (i = 0; rc[i].option; i++)
+    {
+        if (!g_ascii_strcasecmp ("top_border_maximize", rc[i].option))
+        {
+            if (rc[i].value == NULL)
+            {
+                /* sets top_border_maximize from borderless_maximize param. if NULL */
+                screen_info->params->top_border_maximize =
+                    !screen_info->params->borderless_maximize;
+            }
+            else
+            {
+            screen_info->params->top_border_maximize = getBoolValue ("top_border_maximize", rc);
+            }
+        }
     }
 
     freeRc (rc);
