@@ -1,3 +1,11 @@
+4.10.2
+======
+xfwm4-titleless :
+- Change top border creation for hiding capabilities (add frameTopBorder and frameTitle functions)
+- Split title-*.xpm into title and top border part if top-3-active.xpm don't exist
+- add optional top_border_height and top_border_maximize parameters.
+- update french translations
+
 4.10.1
 ======
 - Autotools updates.
@@ -11,6 +19,10 @@
 - Translation updates: Arabic, Bulgarian, Catalan (Valencian), 
   German, Greek, French, Hindi, Croatian, Indonesian, Polish, Slovak, 
   Serbian, Swedish, Turkish, Uyghur.
+
+xfwm4-titleless :
+- Added titleless maximization feature
+- Fix frameSetShape function
 
 4.10.0
 ======
