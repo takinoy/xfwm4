@@ -1,5 +1,7 @@
 @SET_MAKE@
 
+PACKAGE = xfwm4-titleless
+
 EXTRA_DIST =								\
 	example.gtkrc-2.0						\
 	intltool-extract.in						\
