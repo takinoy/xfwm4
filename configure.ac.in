@@ -224,6 +224,7 @@ AC_SUBST([REVISION])
 
 AC_OUTPUT([
 Makefile
+arch/PKGBUILD
 defaults/Makefile
 helper-dialog/Makefile
 icons/Makefile
