@@ -2664,11 +2664,13 @@ clientShade (Client *c)
     unsigned long mask;
 
     g_return_if_fail (c != NULL);
-    TRACE ("entering clientToggleShaded");
+    TRACE ("entering clientShaded");
     TRACE ("shading client \"%s\" (0x%lx)", c->name, c->window);
 
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
-        || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN))
+        || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
     {
         TRACE ("cowardly refusing to shade \"%s\" (0x%lx) because it has no border", c->name, c->window);
         return;
@@ -2723,7 +2725,7 @@ clientUnshade (Client *c)
     DisplayInfo *display_info;
 
     g_return_if_fail (c != NULL);
-    TRACE ("entering clientToggleShaded");
+    TRACE ("entering clientUnshaded");
     TRACE ("shading/unshading client \"%s\" (0x%lx)", c->name, c->window);
 
     if (!FLAG_TEST (c->flags, CLIENT_FLAG_SHADED))
@@ -3222,6 +3224,15 @@ clientToggleMaximized (Client *c, int mode, gboolean restore_position)
     if (!CLIENT_CAN_MAXIMIZE_WINDOW (c))
     {
         return FALSE;
+    }
+
+    if (FLAG_TEST (c->flags, CLIENT_FLAG_SHADED)
+            && FLAG_TEST (mode, CLIENT_FLAG_MAXIMIZED)
+            && !FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize)
+    {
+        /* unshade when client try to maximize shaded window without title */
+        clientUnshade (c);
     }
 
     screen_info = c->screen_info;
