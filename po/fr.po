@@ -1,22 +1,25 @@
-# French translation for the xfwm4 package.
-# Copyright (C) 2002-2008 The Xfce development team.
-# This file is distributed under the same license as the xfwm4 package.
-# Olivier Fourdan <fourdan@xfce.org>, 2002-2006.
-# Maximilian Schleiss <maximilian@xfce.org>, 2006-2008.
-# Mike Massonnet <mmassonnet@xfce.org>, 2008.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 #
+# Translators:
+# jc1 <jc1.quebecos@gmail.com>, 2013
+# jc1 <jc1.quebecos@gmail.com>, 2013
+# m8t <mmassonnet@xfce.org>, 2008
 msgid ""
 msgstr ""
-"Project-Id-Version: xfwm4\n"
+"Project-Id-Version: Xfwm4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-20 17:53+0200\n"
-"PO-Revision-Date: 2012-04-15 16:54+0200\n"
-"Last-Translator: Iliyas Jorio <inv.jorio@gmail.com>\n"
-"Language-Team: French <xfce-i18n@xfce.org>\n"
+"POT-Creation-Date: 2013-10-31 03:39+0100\n"
+"PO-Revision-Date: 2013-08-09 13:11+0000\n"
+"Last-Translator: jc1 <jc1.quebecos@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xfce/language/"
+"fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../helper-dialog/helper-dialog.c:84
 msgid ""
@@ -183,7 +186,7 @@ msgstr "_Réinitialiser aux valeurs par défaut"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:20
 msgid "<b>Window _shortcuts</b>"
-msgstr "<b>Racc_ourcis de gestion des fenêtres</b>"
+msgstr "<b>Racc_ourcis des fenêtres</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:21
 msgid "Ke_yboard"
@@ -660,7 +663,7 @@ msgid ""
 "or \"skip taskbar\" properties set"
 msgstr ""
 "_Ignorer les fenêtres absentes de la barre des tâches\n"
-"(propriétés « skip pager » et « skip taskbar »)"
+" ou des propriétés « skip pager » et « skip taskbar »"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:5
 msgid "_Include hidden (i.e. iconified) windows"
@@ -770,7 +773,7 @@ msgstr "Changer d'espace de travail en fonction de l'_agencement du bureau"
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:30
 msgid "Wrap workspaces when the _first or the last workspace is reached"
 msgstr ""
-"Changer d'espace de travail après en avoir atteint le _premier ou le dernier"
+"Changer d'espace de travail lorsque le _premier ou le dernier est atteint"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:31
 msgid "_Workspaces"
@@ -778,7 +781,8 @@ msgstr "_Espaces de travail"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:32
 msgid "_Minimum size of windows to trigger smart placement:"
-msgstr "Taille _minimale des fenêtres placées intelligemment :"
+msgstr ""
+"Taille _minimale des fenêtres pour déclencher le placement intelligent :"
 
 #. Smart placement size
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:36
@@ -815,11 +819,11 @@ msgstr "Afficher l'ombre sous les fenêtres no_rmales"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:44
 msgid "Show shadows under pop_up windows"
-msgstr "Afficher l'ombre sous les fenêtres context_uelles"
+msgstr "Afficher les ombres sous les fenêtres context_uelles"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:45
 msgid "Show shadows under _dock windows"
-msgstr "Afficher l'ombre sous les fenêtres _dock"
+msgstr "Afficher les ombres sous les fenêtres _dock"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:46
 msgid "Opaci_ty of window decorations:"
@@ -916,7 +920,7 @@ msgstr "[ARGUMENTS...]"
 #: ../src/main.c:565
 #, c-format
 msgid "Type \"%s --help\" for usage."
-msgstr "Saisissez \"%s --help\" pour l'usage."
+msgstr "Saisissez « %s --help » pour l'usage."
 
 #: ../src/menu.c:43
 msgid "Ma_ximize"
@@ -1048,30 +1052,3 @@ msgstr "Erreur lors de la lecture des données du processus fils : %s\n"
 #, c-format
 msgid "Cannot spawn helper-dialog: %s\n"
 msgstr "Impossible de démarrer la fenêtre d'aide : %s\n"
-
-#~ msgid "Set number and names of workspaces"
-#~ msgstr "Régler le nombre et les noms des espaces de travail"
-
-#~ msgid "<b>Workspaces</b>"
-#~ msgstr "<b>Espaces de travail</b>"
-
-#~ msgid "Change workspace name"
-#~ msgstr "Renommer l'espace de travail"
-
-#~ msgid "Hide"
-#~ msgstr "Iconifier"
-
-#~ msgid "%s: Segmentation fault"
-#~ msgstr "%s: Erreur de segmentation"
-
-#~ msgid "  "
-#~ msgstr "  "
-
-#~ msgid "Distance|<i>Small</i>"
-#~ msgstr "<i>Faible</i>"
-
-#~ msgid "Resistance|<i>Small</i>"
-#~ msgstr "<i>Faible</i>"
-
-#~ msgid "Resistance|<i>Wide</i>"
-#~ msgstr "<i>Forte</i>"

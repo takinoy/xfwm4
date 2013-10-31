@@ -1,57 +1,58 @@
-# Azerbaijani Turkish translation of xfwm.
-# Copyright (C) 2002-2006 The Xfce development team.
-# This file is distributed under the same license as the xfwm package.
-# Mətin Əmirov <metin@karegen.com>, 2003, 2004.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# k3lt01 <keltoiboy@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: xfwm4 4.4.0\n"
+"Project-Id-Version: Xfwm4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-09 18:54+0200\n"
-"PO-Revision-Date: 2004-08-23 18:04+0300\n"
-"Last-Translator: Mətin Əmirov <metin@karegen.com>\n"
-"Language-Team: Azerbaijani <translation-team-az@lists.sourceforge.net>\n"
-"Language: az\n"
+"POT-Creation-Date: 2013-07-02 23:22+0200\n"
+"PO-Revision-Date: 2013-07-25 09:16+0000\n"
+"Last-Translator: k3lt01 <keltoiboy@gmail.com>\n"
+"Language-Team: English (Australia) (http://www.transifex.com/projects/p/xfce/language/en_AU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
+"Language: en_AU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../helper-dialog/helper-dialog.c:84
 msgid ""
 "This window might be busy and is not responding.\n"
 "Do you want to terminate the application?"
-msgstr ""
+msgstr "This window might be busy and is not responding.\nDo you want to terminate the application?"
 
 #: ../helper-dialog/helper-dialog.c:89
 msgid "Warning"
-msgstr ""
+msgstr "Warning"
 
 #: ../settings-dialogs/tweaks-settings.c:50
 msgid "None"
-msgstr ""
+msgstr "None"
 
 #: ../settings-dialogs/tweaks-settings.c:454
 msgid "Session manager socket"
-msgstr ""
+msgstr "Session manager socket"
 
 #: ../settings-dialogs/tweaks-settings.c:454
 #: ../settings-dialogs/workspace-settings.c:381
 #: ../settings-dialogs/xfwm4-settings.c:315
 msgid "SOCKET ID"
-msgstr ""
+msgstr "SOCKET ID"
 
 #: ../settings-dialogs/tweaks-settings.c:455
 #: ../settings-dialogs/workspace-settings.c:382
 #: ../settings-dialogs/xfwm4-settings.c:317
 msgid "Version information"
-msgstr ""
+msgstr "Version information"
 
 #: ../settings-dialogs/tweaks-settings.c:473
 #: ../settings-dialogs/workspace-settings.c:399
 #: ../settings-dialogs/xfwm4-settings.c:964
 msgid "."
-msgstr ""
+msgstr "."
 
 #: ../settings-dialogs/tweaks-settings.c:477
 #: ../settings-dialogs/workspace-settings.c:403
@@ -60,1554 +61,958 @@ msgstr ""
 msgid ""
 "%s: %s\n"
 "Try %s --help to see a full list of available command line options.\n"
-msgstr ""
+msgstr "%s: %s\nTry %s --help to see a full list of available command line options.\n"
 
 #: ../settings-dialogs/workspace-settings.c:74
 #: ../settings-dialogs/workspace-settings.c:89
 #, c-format
 msgid "Workspace %d"
-msgstr "İş Sahəsi %d"
+msgstr "Workspace %d"
 
 #: ../settings-dialogs/workspace-settings.c:275
-#, fuzzy
 msgid "Workspace Name"
-msgstr "İş sahəsi adları"
+msgstr "Workspace Name"
 
 #: ../settings-dialogs/workspace-settings.c:381
 #: ../settings-dialogs/xfwm4-settings.c:315
 msgid "Settings manager socket"
-msgstr ""
+msgstr "Settings manager socket"
 
 #: ../settings-dialogs/xfce-wm-settings.desktop.in.h:1
 #: ../settings-dialogs/xfwm4-dialog.glade.h:1
 msgid "Window Manager"
-msgstr "Pəncərə İdarəçisi"
+msgstr "Window Manager"
 
 #: ../settings-dialogs/xfce-wm-settings.desktop.in.h:2
 #: ../settings-dialogs/xfwm4-dialog.glade.h:2
-#, fuzzy
 msgid "Configure window behavior and shortcuts"
-msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
+msgstr "Configure window behaviour and shortcuts"
 
 #: ../settings-dialogs/xfce-wmtweaks-settings.desktop.in.h:1
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:1
-#, fuzzy
 msgid "Window Manager Tweaks"
-msgstr "Pəncərə İdarəçisi"
+msgstr "Window Manager Tweaks"
 
 #: ../settings-dialogs/xfce-wmtweaks-settings.desktop.in.h:2
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:2
-#, fuzzy
 msgid "Fine-tune window behaviour and effects"
-msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
+msgstr "Fine-tune window behaviour and effects"
 
 #: ../settings-dialogs/xfce-workspaces-settings.desktop.in.h:1
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:1
 msgid "Workspaces"
-msgstr "İş Sahələri"
+msgstr "Workspaces"
 
 #: ../settings-dialogs/xfce-workspaces-settings.desktop.in.h:2
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:2
 msgid "Configure layout, names and margins"
-msgstr ""
+msgstr "Configure layout, names and margins"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:3
-#, fuzzy
 msgid "<b>_Theme</b>"
-msgstr "Başlıq Hizası"
+msgstr "<b>_Theme</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:4
-#, fuzzy
 msgid "<b>Title fon_t</b>"
-msgstr "Başlıq yazı növü"
+msgstr "<b>Title fon_t</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:5
-#, fuzzy
 msgid "<b>Title _alignment</b>"
-msgstr "Başlıq Hizası"
+msgstr "<b>Title _alignment</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:6
-#, fuzzy
 msgid "Click and drag the buttons to change the layout"
-msgstr "Düzülüşü dəyişdirmək üçün düymələri tıqlayın və daşıyın"
+msgstr "Click and drag the buttons to change the layout"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:7
 msgid "Title"
-msgstr "Başlıq"
+msgstr "Title"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:8
-#, fuzzy
 msgid "The window title cannot be removed"
-msgstr "Pəncərə etiketi, silinə bilməz"
+msgstr "The window title cannot be removed"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:9
 msgid "Active"
-msgstr "Fəal"
+msgstr "Active"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:10
 msgid "Menu"
-msgstr "Menyu"
+msgstr "Menu"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:11
 msgid "Stick"
-msgstr "Sabitlə"
+msgstr "Stick"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:12
 msgid "Shade"
-msgstr "Bur"
+msgstr "Shade"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:13
-#, fuzzy
 msgid "Minimize"
-msgstr "_Böyüt"
+msgstr "Minimise"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:14
 msgid "Maximize"
-msgstr "Böyüt"
+msgstr "Maximise"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:15
 msgid "Close"
-msgstr "Bağla"
+msgstr "Close"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:16
 msgid "Hidden"
-msgstr "Gizli"
+msgstr "Hidden"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:17
-#, fuzzy
 msgid "<b>Button layout</b>"
-msgstr "Düymə düzülüşü"
+msgstr "<b>Button layout</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:18
-#, fuzzy
 msgid "_Style"
-msgstr "Tərz"
+msgstr "_Style"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:19
 msgid "_Reset to Defaults"
-msgstr ""
+msgstr "_Reset to Defaults"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:20
-#, fuzzy
 msgid "<b>Window _shortcuts</b>"
-msgstr "Pəncərə qısa yolları"
+msgstr "<b>Window _shortcuts</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:21
-#, fuzzy
 msgid "Ke_yboard"
-msgstr "Klaviatura"
+msgstr "Ke_yboard"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:22
-#, fuzzy
 msgid "Clic_k to focus"
-msgstr "Fokus üçün tıqlansın"
+msgstr "Clic_k to focus"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:23
-#, fuzzy
 msgid "Focus follows _mouse"
-msgstr "Fokus siçanı izləsin"
+msgstr "Focus follows _mouse"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:24
-#, fuzzy
 msgid "_Delay before window receives focus:"
-msgstr "Fokuslu pəncərənin qabağa gəlmə gecikməsi :"
+msgstr "_Delay before window receives focus:"
 
 #. Raise focus delay
 #: ../settings-dialogs/xfwm4-dialog.glade.h:26
 msgid "<i>Short</i>"
-msgstr ""
+msgstr "<i>Short</i>"
 
 #. Raise focus delay
 #: ../settings-dialogs/xfwm4-dialog.glade.h:28
 msgid "<i>Long</i>"
-msgstr ""
+msgstr "<i>Long</i>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:29
-#, fuzzy
 msgid "<b>Focus model</b>"
-msgstr "Fokus növü"
+msgstr "<b>Focus model</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:30
-#, fuzzy
 msgid "Automatically give focus to _newly created windows"
-msgstr "Yeni yaradılmış pəncərələri avtomatik olaraq fokusa al"
+msgstr "Automatically give focus to _newly created windows"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:31
-#, fuzzy
 msgid "<b>New window focus</b>"
-msgstr "Yeni pəncərə fokusu"
+msgstr "<b>New window focus</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:32
-#, fuzzy
 msgid "Automatically _raise windows when they receive focus"
-msgstr "Pəncərələrə fokus veriləndə onları avtomatik olaraq qabağa gətir"
+msgstr "Automatically _raise windows when they receive focus"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:33
-#, fuzzy
 msgid "Delay _before raising focused window:"
-msgstr "Fokuslu pəncərənin qabağa gəlmə gecikməsi :"
+msgstr "Delay _before raising focused window:"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:34
-#, fuzzy
 msgid "<b>Raise on focus</b>"
-msgstr "Fokus veriləndə qabağa gətir"
+msgstr "<b>Raise on focus</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:35
-#, fuzzy
 msgid "Raise window when clicking _inside application window"
-msgstr "Proqram pəncərəsinin içinə tıqlandığında pəncərəni qabağa gətir"
+msgstr "Raise window when clicking _inside application window"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:36
-#, fuzzy
 msgid "<b>Raise on click</b>"
-msgstr "Tıqlamada qabağa gətir"
+msgstr "<b>Raise on click</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:37
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:15
-#, fuzzy
 msgid "_Focus"
-msgstr "Fokus"
+msgstr "_Focus"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:38
-#, fuzzy
 msgid "Snap windows to screen _border"
-msgstr "Pəncərələri ekran kənarlarına yapışdır"
+msgstr "Snap windows to screen _border"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:39
-#, fuzzy
 msgid "Snap windows to other _windows"
-msgstr "Pəncərələri birbirinə yapışdır"
+msgstr "Snap windows to other _windows"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:40
-#, fuzzy
 msgid "Dis_tance:"
-msgstr "Məsafə :"
+msgstr "Dis_tance:"
 
 #. Edge resistance
 #. Smart placement size
 #: ../settings-dialogs/xfwm4-dialog.glade.h:42
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:33
-#, fuzzy
 msgid "<i>Small</i>"
-msgstr "Kiçik"
+msgstr "<i>Small</i>"
 
 #. Edge resistance
 #: ../settings-dialogs/xfwm4-dialog.glade.h:44
-#, fuzzy
 msgid "<i>Wide</i>"
-msgstr "Məsafə :"
+msgstr "<i>Wide</i>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:45
-#, fuzzy
 msgid "<b>Windows snapping</b>"
-msgstr "Pəncərələrin yapışması"
+msgstr "<b>Windows snapping</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:46
-#, fuzzy
 msgid "Wrap workspaces when the _pointer reaches the screen edge"
-msgstr "Siçan ekran kənarına gəldiyində iş sahələrini dəyişdir"
+msgstr "Wrap workspaces when the _pointer reaches the screen edge"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:47
-#, fuzzy
 msgid "Wrap workspaces when _dragging a window off the screen"
-msgstr "Pəncərə·ekran·kənarına·daşındığında iş·sahələrini·dəyişdir"
+msgstr "Wrap workspaces when _dragging a window off the screen"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:48
-#, fuzzy
 msgid "_Edge resistance:"
-msgstr "Kənar Müqaviməti :"
+msgstr "_Edge resistance:"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:49
-#, fuzzy
 msgid "<b>Wrap workspaces</b>"
-msgstr "İş sahələrini dəyişdir"
+msgstr "<b>Wrap workspaces</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:50
-#, fuzzy
 msgid "Hide content of windows when _resizing"
-msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
+msgstr "Hide content of windows when _resizing"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:51
-#, fuzzy
 msgid "Hide content of windows when _moving"
-msgstr "Daşındığında pəncərələrin məzmununu göstər"
+msgstr "Hide content of windows when _moving"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:52
-#, fuzzy
 msgid "<b>Box move and resize</b>"
-msgstr "Şəffaf daşınma və ölçüləndirmə"
+msgstr "<b>Box move and resize</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:53
-#, fuzzy
 msgid "The action to perform when the title-bar is double-clicked"
-msgstr "Başlıq çubuğuna cüt tıqlandığında həyata keçiriləcək gedişat :"
+msgstr "The action to perform when the title-bar is double-clicked"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:54
-#, fuzzy
 msgid "<b>Double click _action</b>"
-msgstr "Cüt tıqlama gedişatı"
+msgstr "<b>Double click _action</b>"
 
 #: ../settings-dialogs/xfwm4-dialog.glade.h:55
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Təfərruatlar"
+msgstr "Ad_vanced"
 
 #: ../settings-dialogs/xfwm4-settings.c:220
 #: ../settings-dialogs/xfwm4-settings.c:253
 msgid "Shade window"
-msgstr "Pəncərəni bur"
+msgstr "Shade window"
 
 #: ../settings-dialogs/xfwm4-settings.c:221
 #: ../settings-dialogs/xfwm4-settings.c:250
 msgid "Hide window"
-msgstr "Pəncərəni gizlət"
+msgstr "Hide window"
 
 #: ../settings-dialogs/xfwm4-settings.c:222
 #: ../settings-dialogs/xfwm4-settings.c:249
 msgid "Maximize window"
-msgstr "Pəncərəni böyüt"
+msgstr "Maximise window"
 
 #: ../settings-dialogs/xfwm4-settings.c:223
 #: ../settings-dialogs/xfwm4-settings.c:258
-#, fuzzy
 msgid "Fill window"
-msgstr "Pəncərəni gizlət"
+msgstr "Fill window"
 
 #: ../settings-dialogs/xfwm4-settings.c:224
 msgid "Nothing"
-msgstr "Heçnə"
+msgstr "Nothing"
 
 #: ../settings-dialogs/xfwm4-settings.c:229
 #: ../settings-dialogs/xfwm4-settings.c:239
 msgid "Left"
-msgstr "Sol"
+msgstr "Left"
 
 #: ../settings-dialogs/xfwm4-settings.c:230
 msgid "Center"
-msgstr "Orta"
+msgstr "Centre"
 
 #: ../settings-dialogs/xfwm4-settings.c:231
 #: ../settings-dialogs/xfwm4-settings.c:240
 msgid "Right"
-msgstr "Sağ"
+msgstr "Right"
 
 #: ../settings-dialogs/xfwm4-settings.c:236
 msgid "Window operations menu"
-msgstr ""
+msgstr "Window operations menu"
 
 #: ../settings-dialogs/xfwm4-settings.c:237
 msgid "Up"
-msgstr ""
+msgstr "Up"
 
 #: ../settings-dialogs/xfwm4-settings.c:238
 msgid "Down"
-msgstr ""
+msgstr "Down"
 
 #: ../settings-dialogs/xfwm4-settings.c:241
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: ../settings-dialogs/xfwm4-settings.c:242
-#, fuzzy
 msgid "Cycle windows"
-msgstr "Pəncərəni bağla"
+msgstr "Cycle windows"
 
 #: ../settings-dialogs/xfwm4-settings.c:243
-#, fuzzy
 msgid "Cycle windows (Reverse)"
-msgstr "Pəncərəni bağla"
+msgstr "Cycle windows (Reverse)"
 
 #: ../settings-dialogs/xfwm4-settings.c:244
-#, fuzzy
 msgid "Switch window for same application"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Switch window for same application"
 
 #: ../settings-dialogs/xfwm4-settings.c:245
-#, fuzzy
 msgid "Switch application"
-msgstr "Naməlum proqram!"
+msgstr "Switch application"
 
 #: ../settings-dialogs/xfwm4-settings.c:246
 msgid "Close window"
-msgstr "Pəncərəni bağla"
+msgstr "Close window"
 
 #: ../settings-dialogs/xfwm4-settings.c:247
 msgid "Maximize window horizontally"
-msgstr "Pəncərəni üfüqi olaraq böyüt"
+msgstr "Maximise window horizontally"
 
 #: ../settings-dialogs/xfwm4-settings.c:248
 msgid "Maximize window vertically"
-msgstr "Pəncərəni şaquli olaraq böyüt"
+msgstr "Maximise window vertically"
 
 #: ../settings-dialogs/xfwm4-settings.c:251
-#, fuzzy
 msgid "Move window"
-msgstr "Pəncərəni yuxarı daşı"
+msgstr "Move window"
 
 #: ../settings-dialogs/xfwm4-settings.c:252
-#, fuzzy
 msgid "Resize window"
-msgstr "Pəncərəni yuxarı ölçüləndir"
+msgstr "Resize window"
 
 #: ../settings-dialogs/xfwm4-settings.c:254
 msgid "Stick window"
-msgstr "Pəncərəni sabitlə"
+msgstr "Stick window"
 
 #: ../settings-dialogs/xfwm4-settings.c:255
 msgid "Raise window"
-msgstr "Pəncərəni qabağa gətir"
+msgstr "Raise window"
 
 #: ../settings-dialogs/xfwm4-settings.c:256
 msgid "Lower window"
-msgstr "Pəncərəni arxaya qoy"
+msgstr "Lower window"
 
 #: ../settings-dialogs/xfwm4-settings.c:257
-#, fuzzy
 msgid "Raise or lower window"
-msgstr "Pəncərəni qabağa gətir"
+msgstr "Raise or lower window"
 
 #: ../settings-dialogs/xfwm4-settings.c:259
-#, fuzzy
 msgid "Fill window horizontally"
-msgstr "Pəncərəni üfüqi olaraq böyüt"
+msgstr "Fill window horizontally"
 
 #: ../settings-dialogs/xfwm4-settings.c:260
-#, fuzzy
 msgid "Fill window vertically"
-msgstr "Pəncərəni şaquli olaraq böyüt"
+msgstr "Fill window vertically"
 
 #: ../settings-dialogs/xfwm4-settings.c:261
 msgid "Toggle above"
-msgstr ""
+msgstr "Toggle above"
 
 #: ../settings-dialogs/xfwm4-settings.c:262
 msgid "Toggle fullscreen"
-msgstr "Tam ekran modunu aç"
+msgstr "Toggle fullscreen"
 
 #: ../settings-dialogs/xfwm4-settings.c:263
-#, fuzzy
 msgid "Move window to upper workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move window to upper workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:264
-#, fuzzy
 msgid "Move window to bottom workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move window to bottom workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:265
-#, fuzzy
 msgid "Move window to left workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move window to left workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:266
-#, fuzzy
 msgid "Move window to right workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move window to right workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:267
 msgid "Move window to previous workspace"
-msgstr "Pəncərəni əvvəlki iş sahəsinə daşı"
+msgstr "Move window to previous workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:268
 msgid "Move window to next workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move window to next workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:269
-#, fuzzy
 msgid "Move window to workspace 1"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 1"
 
 #: ../settings-dialogs/xfwm4-settings.c:270
-#, fuzzy
 msgid "Move window to workspace 2"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 2"
 
 #: ../settings-dialogs/xfwm4-settings.c:271
-#, fuzzy
 msgid "Move window to workspace 3"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 3"
 
 #: ../settings-dialogs/xfwm4-settings.c:272
-#, fuzzy
 msgid "Move window to workspace 4"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 4"
 
 #: ../settings-dialogs/xfwm4-settings.c:273
-#, fuzzy
 msgid "Move window to workspace 5"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 5"
 
 #: ../settings-dialogs/xfwm4-settings.c:274
-#, fuzzy
 msgid "Move window to workspace 6"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 6"
 
 #: ../settings-dialogs/xfwm4-settings.c:275
-#, fuzzy
 msgid "Move window to workspace 7"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 7"
 
 #: ../settings-dialogs/xfwm4-settings.c:276
-#, fuzzy
 msgid "Move window to workspace 8"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 8"
 
 #: ../settings-dialogs/xfwm4-settings.c:277
-#, fuzzy
 msgid "Move window to workspace 9"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 9"
 
 #: ../settings-dialogs/xfwm4-settings.c:278
-#, fuzzy
 msgid "Move window to workspace 10"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 10"
 
 #: ../settings-dialogs/xfwm4-settings.c:279
-#, fuzzy
 msgid "Move window to workspace 11"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 11"
 
 #: ../settings-dialogs/xfwm4-settings.c:280
-#, fuzzy
 msgid "Move window to workspace 12"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Move window to workspace 12"
 
 #: ../settings-dialogs/xfwm4-settings.c:281
-#, fuzzy
 msgid "Tile window to the top"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Tile window to the top"
 
 #: ../settings-dialogs/xfwm4-settings.c:282
-#, fuzzy
 msgid "Tile window to the bottom"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Tile window to the bottom"
 
 #: ../settings-dialogs/xfwm4-settings.c:283
-#, fuzzy
 msgid "Tile window to the left"
-msgstr "Pəncərəni sola ölçüləndir"
+msgstr "Tile window to the left"
 
 #: ../settings-dialogs/xfwm4-settings.c:284
-#, fuzzy
 msgid "Tile window to the right"
-msgstr "Pəncərəni sağa ölçüləndir"
+msgstr "Tile window to the right"
 
 #: ../settings-dialogs/xfwm4-settings.c:285
 msgid "Show desktop"
-msgstr ""
+msgstr "Show desktop"
 
 #: ../settings-dialogs/xfwm4-settings.c:286
-#, fuzzy
 msgid "Upper workspace"
-msgstr "Növbəti iş sahəsi"
+msgstr "Upper workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:287
-#, fuzzy
 msgid "Bottom workspace"
-msgstr "Növbəti iş sahəsi"
+msgstr "Bottom workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:288
-#, fuzzy
 msgid "Left workspace"
-msgstr "Növbəti iş sahəsi"
+msgstr "Left workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:289
-#, fuzzy
 msgid "Right workspace"
-msgstr "Növbəti iş sahəsi"
+msgstr "Right workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:290
 msgid "Previous workspace"
-msgstr "Əvvəlki iş sahəsi"
+msgstr "Previous workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:291
 msgid "Next workspace"
-msgstr "Növbəti iş sahəsi"
+msgstr "Next workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:292
-#, fuzzy
 msgid "Workspace 1"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 1"
 
 #: ../settings-dialogs/xfwm4-settings.c:293
-#, fuzzy
 msgid "Workspace 2"
-msgstr "İş Sahəsi %d"
+msgstr "Workspace 2"
 
 #: ../settings-dialogs/xfwm4-settings.c:294
-#, fuzzy
 msgid "Workspace 3"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 3"
 
 #: ../settings-dialogs/xfwm4-settings.c:295
-#, fuzzy
 msgid "Workspace 4"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 4"
 
 #: ../settings-dialogs/xfwm4-settings.c:296
-#, fuzzy
 msgid "Workspace 5"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 5"
 
 #: ../settings-dialogs/xfwm4-settings.c:297
-#, fuzzy
 msgid "Workspace 6"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 6"
 
 #: ../settings-dialogs/xfwm4-settings.c:298
-#, fuzzy
 msgid "Workspace 7"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 7"
 
 #: ../settings-dialogs/xfwm4-settings.c:299
-#, fuzzy
 msgid "Workspace 8"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 8"
 
 #: ../settings-dialogs/xfwm4-settings.c:300
-#, fuzzy
 msgid "Workspace 9"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 9"
 
 #: ../settings-dialogs/xfwm4-settings.c:301
-#, fuzzy
 msgid "Workspace 10"
-msgstr "İş Sahəsi %d"
+msgstr "Workspace 10"
 
 #: ../settings-dialogs/xfwm4-settings.c:302
-#, fuzzy
 msgid "Workspace 11"
-msgstr "İş Sahəsi %i"
+msgstr "Workspace 11"
 
 #: ../settings-dialogs/xfwm4-settings.c:303
-#, fuzzy
 msgid "Workspace 12"
-msgstr "İş Sahəsi %d"
+msgstr "Workspace 12"
 
 #: ../settings-dialogs/xfwm4-settings.c:304
 msgid "Add workspace"
-msgstr "İş sahəsi əlavə et"
+msgstr "Add workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:305
-#, fuzzy
 msgid "Add adjacent workspace"
-msgstr "İş sahəsi əlavə et"
+msgstr "Add adjacent workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:306
-#, fuzzy
 msgid "Delete last workspace"
-msgstr "İş sahəsini sil"
+msgstr "Delete last workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:307
-#, fuzzy
 msgid "Delete active workspace"
-msgstr "İş sahəsini sil"
+msgstr "Delete active workspace"
 
 #: ../settings-dialogs/xfwm4-settings.c:453
 msgid "Theme"
-msgstr ""
+msgstr "Theme"
 
 #: ../settings-dialogs/xfwm4-settings.c:602
-#, fuzzy
 msgid "Action"
-msgstr "Fəal"
+msgstr "Action"
 
 #: ../settings-dialogs/xfwm4-settings.c:607
-#, fuzzy
 msgid "Shortcut"
-msgstr "Qısa yol yarat"
+msgstr "Shortcut"
 
 #: ../settings-dialogs/xfwm4-settings.c:993
 #, c-format
 msgid "Failed to initialize xfconf. Reason: %s"
-msgstr ""
+msgstr "Failed to initialise xfconf. Reason: %s"
 
 #: ../settings-dialogs/xfwm4-settings.c:1004
 msgid "Could not create the settings dialog."
-msgstr ""
-
-#: ../settings-dialogs/xfwm4-settings.c:1891
-#: ../settings-dialogs/xfwm4-settings.c:1892
-msgid "Reset to Defaults"
-msgstr ""
+msgstr "Could not create the settings dialogue."
 
 #: ../settings-dialogs/xfwm4-settings.c:1893
+#: ../settings-dialogs/xfwm4-settings.c:1894
+msgid "Reset to Defaults"
+msgstr "Reset to Defaults"
+
+#: ../settings-dialogs/xfwm4-settings.c:1895
 msgid ""
-"This will reset all shortcuts to their default values. Do you really want to "
-"do this?"
-msgstr ""
+"This will reset all shortcuts to their default values. Do you really want to"
+" do this?"
+msgstr "This will reset all shortcuts to their default values. Do you really want to do this?"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:3
 msgid ""
 "_Skip windows that have \"skip pager\"\n"
 "or \"skip taskbar\" properties set"
-msgstr ""
+msgstr "_Skip windows that have \"skip pager\"\nor \"skip taskbar\" properties set"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:5
 msgid "_Include hidden (i.e. iconified) windows"
-msgstr ""
+msgstr "_Include hidden (i.e. iconified) windows"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:6
-#, fuzzy
 msgid "Cycle _through windows on all workspaces"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Cycle _through windows on all workspaces"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:7
 msgid "_Draw frame around selected windows while cycling"
-msgstr ""
+msgstr "_Draw frame around selected windows while cycling"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:8
 msgid "C_ycling"
-msgstr ""
+msgstr "C_ycling"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:9
 msgid "Activate _focus stealing prevention"
-msgstr ""
+msgstr "Activate _focus stealing prevention"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:10
 msgid "Honor _standard ICCCM focus hint"
-msgstr ""
+msgstr "Honour _standard ICCCM focus hint"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:11
 msgid "When a window raises itself:"
-msgstr ""
+msgstr "When a window raises itself:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:12
-#, fuzzy
 msgid "_Bring window on current workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "_Bring window on current workspace"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:13
-#, fuzzy
 msgid "Switch to win_dow's workspace"
-msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
+msgstr "Switch to win_dow's workspace"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:14
-#, fuzzy
 msgid "Do _nothing"
-msgstr "Heçnə"
+msgstr "Do _nothing"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:16
 msgid "Key used to _grab and move windows:"
-msgstr ""
+msgstr "Key used to _grab and move windows:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:17
 msgid "_Raise windows when any mouse button is pressed"
-msgstr ""
+msgstr "_Raise windows when any mouse button is pressed"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:18
 msgid "Hide _frame of windows when maximized"
-msgstr ""
+msgstr "Hide _frame of windows when maximised"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:19
-#, fuzzy
 msgid "Restore original _size of maximized windows when moving"
-msgstr "Daşındığında pəncərələrin məzmununu göstər"
+msgstr "Restore original _size of maximised windows when moving"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:20
-#, fuzzy
 msgid "Automatically _tile windows when moving toward the screen edge"
-msgstr "Pəncərələrə fokus veriləndə onları avtomatik olaraq qabağa gətir"
+msgstr "Automatically _tile windows when moving toward the screen edge"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:21
 msgid "Use _edge resistance instead of window snapping"
-msgstr ""
+msgstr "Use _edge resistance instead of window snapping"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:22
 msgid "Notify of _urgency by making window's decoration blink"
-msgstr ""
+msgstr "Notify of _urgency by making window's decoration blink"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:23
 msgid "Keep urgent windows _blinking repeatedly"
-msgstr ""
+msgstr "Keep urgent windows _blinking repeatedly"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:24
 msgid "_Accessibility"
-msgstr ""
+msgstr "_Accessibility"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:25
 msgid "Use the _mouse wheel on the desktop to switch workspaces"
-msgstr ""
+msgstr "Use the _mouse wheel on the desktop to switch workspaces"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:26
 msgid ""
 "_Remember and recall previous workspace\n"
 "when switching via keyboard shortcuts"
-msgstr ""
+msgstr "_Remember and recall previous workspace\nwhen switching via keyboard shortcuts"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:28
 msgid "Wrap workspaces depending on the actual desktop _layout"
-msgstr ""
+msgstr "Wrap workspaces depending on the actual desktop _layout"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:29
-#, fuzzy
 msgid "Wrap workspaces when the _first or the last workspace is reached"
-msgstr "Siçan ekran kənarına gəldiyində iş sahələrini dəyişdir"
+msgstr "Wrap workspaces when the _first or the last workspace is reached"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:30
-#, fuzzy
 msgid "_Workspaces"
-msgstr "İş Sahələri"
+msgstr "_Workspaces"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:31
 msgid "_Minimum size of windows to trigger smart placement:"
-msgstr ""
+msgstr "_Minimum size of windows to trigger smart placement:"
 
 #. Smart placement size
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:35
 msgid "<i>Large</i>"
-msgstr ""
+msgstr "<i>Large</i>"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:36
 msgid "By default, place windows:"
-msgstr ""
+msgstr "By default, place windows:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:37
 msgid "At the _center of the screen"
-msgstr ""
+msgstr "At the _centre of the screen"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:38
 msgid "Under the mouse _pointer"
-msgstr ""
+msgstr "Under the mouse _pointer"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:39
 msgid "_Placement"
-msgstr ""
+msgstr "_Placement"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:40
 msgid "_Enable display compositing"
-msgstr ""
+msgstr "_Enable display compositing"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:41
 msgid "Display _fullscreen overlay windows directly"
-msgstr ""
+msgstr "Display _fullscreen overlay windows directly"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:42
 msgid "Show shadows under _regular windows"
-msgstr ""
+msgstr "Show shadows under _regular windows"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:43
 msgid "Show shadows under pop_up windows"
-msgstr ""
+msgstr "Show shadows under pop_up windows"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:44
 msgid "Show shadows under _dock windows"
-msgstr ""
+msgstr "Show shadows under _dock windows"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:45
-#, fuzzy
 msgid "Opaci_ty of window decorations:"
-msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
+msgstr "Opaci_ty of window decorations:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:46
 msgid "<i>Transparent</i>"
-msgstr ""
+msgstr "<i>Transparent</i>"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:47
 msgid "<i>Opaque</i>"
-msgstr ""
+msgstr "<i>Opaque</i>"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:48
-#, fuzzy
 msgid "Opacity of _inactive windows:"
-msgstr "Daşındığında pəncərələrin məzmununu göstər"
+msgstr "Opacity of _inactive windows:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:49
-#, fuzzy
 msgid "Opacity of windows during _move:"
-msgstr "Daşındığında pəncərələrin məzmununu göstər"
+msgstr "Opacity of windows during _move:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:50
-#, fuzzy
 msgid "Opacity of windows during resi_ze:"
-msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
+msgstr "Opacity of windows during resi_ze:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:51
-#, fuzzy
 msgid "Opacity of popup window_s:"
-msgstr "Daşındığında pəncərələrin məzmununu göstər"
+msgstr "Opacity of popup window_s:"
 
 #: ../settings-dialogs/xfwm4-tweaks-dialog.glade.h:52
-#, fuzzy
 msgid "C_ompositor"
-msgstr "Qısa yol yarat"
+msgstr "C_ompositor"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:3
-#, fuzzy
 msgid "_Number of workspaces:"
-msgstr "İş sahəsi ədədi:"
+msgstr "_Number of workspaces:"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:4
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:5
-#, fuzzy
 msgid "Names"
-msgstr "Ad:"
+msgstr "Names"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:6
 msgid "_General"
-msgstr ""
+msgstr "_General"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:7
 msgid ""
 "Margins are areas on the edges of the screen where no window will be placed"
-msgstr "Kənarlar, ekranın pəncərə yerləşdirilməyəcəyi yerləridir"
+msgstr "Margins are areas on the edges of the screen where no window will be placed"
 
 #: ../settings-dialogs/xfwm4-workspace-dialog.glade.h:8
-#, fuzzy
 msgid "_Margins"
-msgstr "Kənarlar"
+msgstr "_Margins"
 
 #. TRANSLATORS: "(on %s)" is like "running on" the name of the other host
 #: ../src/client.c:184
 #, c-format
 msgid "%s (on %s)"
-msgstr ""
+msgstr "%s (on %s)"
 
 #: ../src/main.c:540
 msgid "Fork to the background"
-msgstr ""
+msgstr "Fork to the background"
 
 #: ../src/main.c:542
 msgid "Fork to the background (not supported)"
-msgstr ""
+msgstr "Fork to the background (not supported)"
 
 #: ../src/main.c:545
 msgid "Set the compositor mode"
-msgstr ""
+msgstr "Set the compositor mode"
 
 #: ../src/main.c:547
 msgid "Set the compositor mode (not supported)"
-msgstr ""
+msgstr "Set the compositor mode (not supported)"
 
 #: ../src/main.c:549
-#, fuzzy
 msgid "Replace the existing window manager"
-msgstr "Pəncərə İdarəçisi"
+msgstr "Replace the existing window manager"
 
 #: ../src/main.c:550
 msgid "Print version information and exit"
-msgstr ""
+msgstr "Print version information and exit"
 
 #: ../src/main.c:558
 msgid "[ARGUMENTS...]"
-msgstr ""
+msgstr "[ARGUMENTS...]"
 
 #: ../src/main.c:565
 #, c-format
 msgid "Type \"%s --help\" for usage."
-msgstr ""
+msgstr "Type \"%s --help\" for usage."
 
 #: ../src/menu.c:43
 msgid "Ma_ximize"
-msgstr "_Böyüt"
+msgstr "Ma_ximise"
 
 #: ../src/menu.c:44
-#, fuzzy
 msgid "Unma_ximize"
-msgstr "_Kiçilt"
+msgstr "Unma_ximise"
 
 #: ../src/menu.c:45
-#, fuzzy
 msgid "Mi_nimize"
-msgstr "_Böyüt"
+msgstr "Mi_nimise"
 
 #: ../src/menu.c:46
 msgid "Minimize _All Other Windows"
-msgstr ""
+msgstr "Minimise _All Other Windows"
 
 #: ../src/menu.c:47
 msgid "S_how"
-msgstr "_Göstər"
+msgstr "S_how"
 
 #: ../src/menu.c:48
 msgid "_Move"
-msgstr ""
+msgstr "_Move"
 
 #: ../src/menu.c:49
 msgid "_Resize"
-msgstr ""
+msgstr "_Resize"
 
 #. --------------------------------------------------------
 #: ../src/menu.c:51
-#, fuzzy
 msgid "Always on Top"
-msgstr "Həmişə üstdə"
+msgstr "Always on Top"
 
 #: ../src/menu.c:52
-#, fuzzy
 msgid "Same as Other Windows"
-msgstr "Pəncərələri birbirinə yapışdır"
+msgstr "Same as Other Windows"
 
 #: ../src/menu.c:53
 msgid "Always Below Other Windows"
-msgstr ""
+msgstr "Always Below Other Windows"
 
 #: ../src/menu.c:54
-#, fuzzy
 msgid "Roll Window Up"
-msgstr "Pəncərəni gizlət"
+msgstr "Roll Window Up"
 
 #: ../src/menu.c:55
-#, fuzzy
 msgid "Roll Window Down"
-msgstr "Pəncərəni aşağı daşı"
+msgstr "Roll Window Down"
 
 #: ../src/menu.c:56
-#, fuzzy
 msgid "_Fullscreen"
-msgstr "Tam ekran modunu aç"
+msgstr "_Fullscreen"
 
 #: ../src/menu.c:57
-#, fuzzy
 msgid "Leave _Fullscreen"
-msgstr "Tam ekran modunu aç"
+msgstr "Leave _Fullscreen"
 
 #: ../src/menu.c:58
-#, fuzzy
 msgid "Context _Help"
-msgstr "Məzmun _yardımı"
+msgstr "Context _Help"
 
 #. --------------------------------------------------------
 #: ../src/menu.c:60
-#, fuzzy
 msgid "Always on Visible Workspace"
-msgstr "Həmişə üstdə"
+msgstr "Always on Visible Workspace"
 
 #: ../src/menu.c:61
 msgid "Only on This Workspace"
-msgstr ""
+msgstr "Only on This Workspace"
 
 #: ../src/menu.c:62
-#, fuzzy
 msgid "Move to Another Workspace"
-msgstr "Pəncərəni növbəti iş sahəsinə daşı"
+msgstr "Move to Another Workspace"
 
 #. --------------------------------------------------------
 #: ../src/menu.c:64
 msgid "_Close"
-msgstr "_Bağla"
+msgstr "_Close"
 
 #. --------------------------------------------------------
 #: ../src/menu.c:67
 msgid "Destroy"
-msgstr "Sonlandır"
+msgstr "Destroy"
 
 #: ../src/menu.c:70
 msgid "_Quit"
-msgstr "Çı_x"
+msgstr "_Quit"
 
 #: ../src/menu.c:71
 msgid "Restart"
-msgstr "Yenidən Başlat"
+msgstr "Restart"
 
 #: ../src/menu.c:412
 #, c-format
 msgid "%s: GtkMenu failed to grab the pointer\n"
-msgstr "%s: GtkMenu oxu ala bilmədi\n"
+msgstr "%s: GtkMenu failed to grab the pointer\n"
 
 #: ../src/settings.c:273
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Cannot allocate color %s\n"
-msgstr "%s: Fəal rəng tapıla bilmir %s\n"
+msgstr "%s: Cannot allocate colour %s\n"
 
 #: ../src/settings.c:275
 #, c-format
 msgid "%s: Cannot allocate color: GValue for color is not of type STRING"
-msgstr ""
+msgstr "%s: Cannot allocate colour: GValue for colour is not of type STRING"
 
 #: ../src/settings.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Cannot parse color %s\n"
-msgstr "%s: Fəal rəng oxuna bilmir %s\n"
+msgstr "%s: Cannot parse colour %s\n"
 
 #: ../src/settings.c:284
 #, c-format
 msgid "%s: Cannot parse color: GValue for color is not of type STRING"
-msgstr ""
+msgstr "%s: Cannot parse colour: GValue for colour is not of type STRING"
 
 #: ../src/terminate.c:75
 #, c-format
 msgid "Error reading data from child process: %s\n"
-msgstr ""
+msgstr "Error reading data from child process: %s\n"
 
 #: ../src/terminate.c:123
 #, c-format
 msgid "Cannot spawn helper-dialog: %s\n"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Set number and names of workspaces"
-#~ msgstr "İş sahəsi ədədi:"
-
-#, fuzzy
-#~ msgid "<b>Margins</b>"
-#~ msgstr "Kənarlar"
-
-#, fuzzy
-#~ msgid "<b>Workspaces</b>"
-#~ msgstr "İş sahələrini dəyişdir"
-
-#, fuzzy
-#~ msgid "Change workspace name"
-#~ msgstr "İş sahəsi adları"
-
-#, fuzzy
-#~ msgid "_Name:"
-#~ msgstr "Ad:"
-
-#~ msgid "Hide"
-#~ msgstr "Gizlət"
-
-#~ msgid "%s: Segmentation fault"
-#~ msgstr "%s: Segmentation xətası"
-
-#, fuzzy
-#~ msgid "Distance|<i>Small</i>"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Resistance|<i>Small</i>"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Resistance|<i>Wide</i>"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid ">Window Manager"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#~ msgid "Workspace Margins"
-#~ msgstr "İş Sahəsi Kənarları"
-
-#~ msgid "Left :"
-#~ msgstr "Sol :"
-
-#~ msgid "Right :"
-#~ msgstr "Sağ :"
-
-#~ msgid "Top :"
-#~ msgstr "Üst :"
-
-#~ msgid "Bottom :"
-#~ msgstr "Alt :"
-
-#, fuzzy
-#~ msgid "Bring window on current workspace"
-#~ msgstr "Pəncərəni növbəti iş sahəsinə daşı"
-
-#, fuzzy
-#~ msgid "Do nothing"
-#~ msgstr "Heçnə"
-
-#, fuzzy
-#~ msgid "Cycle through windows from all workspaces"
-#~ msgstr "Pəncərəni növbəti iş sahəsinə daşı"
-
-#, fuzzy
-#~ msgid "Cycling"
-#~ msgstr "Pəncərəni bağla"
-
-#, fuzzy
-#~ msgid "Focus"
-#~ msgstr "Fokus"
-
-#, fuzzy
-#~ msgid "Hide frame of windows when maximized"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Restore original size of maximized windows when moving"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Wrap workspaces when the first or last workspace is reached"
-#~ msgstr "Siçan ekran kənarına gəldiyində iş sahələrini dəyişdir"
-
-#, fuzzy
-#~ msgid "Size|Small"
-#~ msgstr "Kiçik"
-
-#, fuzzy
-#~ msgid "Opacity of window decorations"
-#~ msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Opacity of inactive windows"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Opacity of windows during move"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Opacity of windows during resize"
-#~ msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Opacity of popup windows"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Compositor"
-#~ msgstr "Qısa yol yarat"
-
-#, fuzzy
-#~ msgid "Button Label|Window Manager Tweaks"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#~ msgid "Change name"
-#~ msgstr "Adını dəyişdir"
-
-#~ msgid "Click on a workspace name to edit it"
-#~ msgstr "İş sahəsinin adına tıqlayaraq dəyişdirə bilərsiniz"
-
-#, fuzzy
-#~ msgid "Number of workspaces:"
-#~ msgstr "İş sahəsi ədədi:"
-
-#, fuzzy
-#~ msgid "Workspace names"
-#~ msgstr "İş sahəsi adları"
-
-#, fuzzy
-#~ msgid "Button Label|Workspaces and Margins"
-#~ msgstr "İş Sahələri və Kənarlar"
-
-#~ msgid "Workspaces and Margins"
-#~ msgstr "İş Sahələri və Kənarlar"
-
-#, fuzzy
-#~ msgid "Window Manager Settings"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Xfce 4 Window Manager Settings"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Advanced Configuration"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Xfce 4 Window Manager Tweaks"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Workspaces Settings"
-#~ msgstr "İş Sahəsi Kənarları"
-
-#, fuzzy
-#~ msgid "Xfce 4 Workspaces Settings"
-#~ msgstr "İş Sahəsi Kənarları"
-
-#, fuzzy
-#~ msgid "Click and drag buttons to change the layout"
-#~ msgstr "Düzülüşü dəyişdirmək üçün düymələri tıqlayın və daşıyın"
-
-#~ msgid "Font Selection Dialog"
-#~ msgstr "Yazı Növü Seçimi Dialoqu"
-
-#, fuzzy
-#~ msgid "Title font"
-#~ msgstr "Başlıq yazı növü"
-
-#, fuzzy
-#~ msgid "Title Alignment"
-#~ msgstr "Başlıq Hizası"
-
-#~ msgid "Text alignment inside title bar :"
-#~ msgstr "Başlıq çubuğu içində mətnin hizası :"
-
-#, fuzzy
-#~ msgid "Button layout"
-#~ msgstr "Düymə düzülüşü"
-
-#, fuzzy
-#~ msgid "Style"
-#~ msgstr "Tərz"
-
-#, fuzzy
-#~ msgid "Window shortcuts"
-#~ msgstr "Pəncərə qısa yolları"
-
-#, fuzzy
-#~ msgid "Command"
-#~ msgstr "Əmr"
-
-#, fuzzy
-#~ msgid "Keyboard"
-#~ msgstr "Klaviatura"
-
-#, fuzzy
-#~ msgid "Focus model"
-#~ msgstr "Fokus növü"
-
-#, fuzzy
-#~ msgid "Click to focus"
-#~ msgstr "Fokus üçün tıqlansın"
-
-#, fuzzy
-#~ msgid "Focus follows mouse"
-#~ msgstr "Fokus siçanı izləsin"
-
-#, fuzzy
-#~ msgid "Delay before window receives focus"
-#~ msgstr "Fokuslu pəncərənin qabağa gəlmə gecikməsi :"
-
-#~ msgid "Slow"
-#~ msgstr "Yavaş"
-
-#~ msgid "Fast"
-#~ msgstr "Sür'ətli"
-
-#, fuzzy
-#~ msgid "Automatically give focus to newly created windows"
-#~ msgstr "Yeni yaradılmış pəncərələri avtomatik olaraq fokusa al"
-
-#, fuzzy
-#~ msgid "New window focus"
-#~ msgstr "Yeni pəncərə fokusu"
-
-#, fuzzy
-#~ msgid "Raise on focus"
-#~ msgstr "Fokus veriləndə qabağa gətir"
-
-#, fuzzy
-#~ msgid "Automatically raise windows when they receive focus"
-#~ msgstr "Pəncərələrə fokus veriləndə onları avtomatik olaraq qabağa gətir"
-
-#, fuzzy
-#~ msgid "Delay before raising focused window :"
-#~ msgstr "Fokuslu pəncərənin qabağa gəlmə gecikməsi :"
-
-#, fuzzy
-#~ msgid "Raise window when clicking inside application window"
-#~ msgstr "Proqram pəncərəsinin içinə tıqlandığında pəncərəni qabağa gətir"
-
-#, fuzzy
-#~ msgid "Raise on click"
-#~ msgstr "Tıqlamada qabağa gətir"
-
-#, fuzzy
-#~ msgid "Windows snapping"
-#~ msgstr "Pəncərələrin yapışması"
-
-#, fuzzy
-#~ msgid "Snap windows to screen border"
-#~ msgstr "Pəncərələri ekran kənarlarına yapışdır"
-
-#, fuzzy
-#~ msgid "Snap windows to other windows"
-#~ msgstr "Pəncərələri birbirinə yapışdır"
-
-#, fuzzy
-#~ msgid "Distance :"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Distance|Small"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Distance|Wide"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Wrap workspaces"
-#~ msgstr "İş sahələrini dəyişdir"
-
-#, fuzzy
-#~ msgid "Wrap workspaces when the pointer reaches a screen edge"
-#~ msgstr "Siçan ekran kənarına gəldiyində iş sahələrini dəyişdir"
-
-#, fuzzy
-#~ msgid "Wrap workspaces when dragging a window off the screen"
-#~ msgstr "Pəncərə·ekran·kənarına·daşındığında iş·sahələrini·dəyişdir"
-
-#, fuzzy
-#~ msgid "Edge Resistance :"
-#~ msgstr "Kənar Müqaviməti :"
-
-#, fuzzy
-#~ msgid "Resistance|Small"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Resistance|Wide"
-#~ msgstr "Məsafə :"
-
-#, fuzzy
-#~ msgid "Opaque move and resize"
-#~ msgstr "Şəffaf daşınma və ölçüləndirmə"
-
-#, fuzzy
-#~ msgid "Display content of windows when resizing"
-#~ msgstr "Ölçüləndirirkən pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Display content of windows when moving"
-#~ msgstr "Daşındığında pəncərələrin məzmununu göstər"
-
-#, fuzzy
-#~ msgid "Double click action"
-#~ msgstr "Cüt tıqlama gedişatı"
-
-#, fuzzy
-#~ msgid "Action to perform when double clicking on title bar :"
-#~ msgstr "Başlıq çubuğuna cüt tıqlandığında həyata keçiriləcək gedişat :"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Təfərruatlar"
-
-#, fuzzy
-#~ msgid "Button Label|Window Manager"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Move window to workspace %d"
-#~ msgstr "Pəncərəni 1-ci iş sahəsinə daşı"
-
-#~ msgid "Cannot open the theme directory !"
-#~ msgstr "Örtük cərgəsi açıla bilmir!"
-
-#~ msgid ""
-#~ "Cannot open %s : \n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s açıla bilmir : \n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Cannot write in %s : \n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s faylına yazıla bilmir: \n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Shortcut already in use !\n"
-#~ "Are you sure you want to use it ?"
-#~ msgstr ""
-#~ "Qısa yol onsuzda istifadədədir !\n"
-#~ "Həqiqətən də onu işlətmək istəyirsinizmi ?"
-
-#~ msgid "Compose shortcut for :"
-#~ msgstr "Bunun üçün qısa yol yarat :"
-
-#~ msgid "Compose shortcut"
-#~ msgstr "Qısa yol yarat"
-
-#, fuzzy
-#~ msgid "No shortcut"
-#~ msgstr "Qısa yol yarat"
-
-#, fuzzy
-#~ msgid "Change the name of workspace %d"
-#~ msgstr "İş sahəsi ədədi:"
-
-#, fuzzy
-#~ msgid "Advanced window manager settings"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid ""
-#~ "This shortcut is already being used by <b>another window manager action</"
-#~ "b>. Which action do you want to use?"
-#~ msgstr ""
-#~ "Qısa yol onsuzda istifadədədir !\n"
-#~ "Həqiqətən də onu işlətmək istəyirsinizmi ?"
-
-#, fuzzy
-#~ msgid ""
-#~ "The shortcut is already being used by a <b>window manager action</b>. "
-#~ "Which action do you want to use?"
-#~ msgstr ""
-#~ "Qısa yol onsuzda istifadədədir !\n"
-#~ "Həqiqətən də onu işlətmək istəyirsinizmi ?"
-
-#, fuzzy
-#~ msgid "The shortcut is already being used for something else."
-#~ msgstr ""
-#~ "Qısa yol onsuzda istifadədədir !\n"
-#~ "Həqiqətən də onu işlətmək istəyirsinizmi ?"
-
-#, fuzzy
-#~ msgid "Enter window manager action shortcut"
-#~ msgstr "Pəncərə İdarəçisi"
-
-#, fuzzy
-#~ msgid "Action: %s"
-#~ msgstr "Fəal"
-
-#, fuzzy
-#~ msgid "Enter shortcut"
-#~ msgstr "Qısa yol yarat"
-
-#, fuzzy
-#~ msgid "Shortcut:"
-#~ msgstr "Qısa yol yarat"
-
-#, fuzzy
-#~ msgid "(Un)Ma_ximize"
-#~ msgstr "_Böyüt"
-
-#~ msgid "Hide _all others"
-#~ msgstr "_Digərlərini gizlət"
-
-#~ msgid "_Shade"
-#~ msgstr "_Bur"
-
-#, fuzzy
-#~ msgid "(Un)_Shade"
-#~ msgstr "_Geri bur"
-
-#~ msgid "S_tick"
-#~ msgstr "_Bütün Sahələrə"
-
-#, fuzzy
-#~ msgid "(Un)S_tick"
-#~ msgstr "Bu iş _sahəsinə"
-
-#, fuzzy
-#~ msgid "Below"
-#~ msgstr "Yavaş"
-
-#~ msgid "Send to..."
-#~ msgstr "Göndər..."
-
-#~ msgid "Workspace %i (%s)"
-#~ msgstr "İş Sahəsi %i (%s)"
-
-#, fuzzy
-#~ msgid "Ctrl"
-#~ msgstr "Orta"
-
-#, fuzzy
-#~ msgid "Button"
-#~ msgstr "Düymə düzülüşü"
-
-#, fuzzy
-#~ msgid "Add Shortcut Theme"
-#~ msgstr "Qısa Yol"
-
-#~ msgid "Move window left"
-#~ msgstr "Pəncərəni sola daşı"
-
-#~ msgid "Move window right"
-#~ msgstr "Pəncərəni sağa daşı"
-
-#~ msgid "Resize window down"
-#~ msgstr "Pəncərəni aşağı ölçüləndir"
-
-#, fuzzy
-#~ msgid "Cancel move/resize window"
-#~ msgstr "Pəncərəni bağla"
-
-#~ msgid "_Hide"
-#~ msgstr "_Gizlət"
+msgstr "Cannot spawn helper-dialog: %s\n"
