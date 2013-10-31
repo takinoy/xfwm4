@@ -87,11 +87,6 @@ enum {
     COMPOSITOR_MODE_MANUAL
 };
 
-#ifndef DEBUG
-/* For what, IEEE Std 1003.1-2001, Section 12.2, Utility Syntax Guidelines.*/
-static char revision[]="@(#)$ " PACKAGE " version " VERSION " revision " REVISION " $";
-#endif
-
 static DisplayInfo *main_display_info = NULL;
 static gint compositor = COMPOSITOR_MODE_MANUAL;
 
