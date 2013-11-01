@@ -9,7 +9,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/cedl38/xfwm4-titleless"
 license=('GPL2')
 groups=('xfce4')
-depends=('libxfce4ui<4.11.0' 'libwnck' 'hicolor-icon-theme')
+depends=('libxfce4ui' 'libwnck' 'hicolor-icon-theme')
 optdepends=('xfce4-windowck-plugin: to put the maximized window title on the panel.')
 makedepends=('intltool')
 provides=('xfwm4=$pkgver')

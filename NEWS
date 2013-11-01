@@ -1,10 +1,22 @@
-4.10.2
-======
 xfwm4-titleless :
-- Change top border creation for hiding capabilities (add frameTopBorder and frameTitle functions)
-- Split title-*.xpm into title and top border part if top-3-active.xpm don't exist
-- add optional top_border_height and top_border_maximize parameters.
-- update french translations
+=================
+
+4.10.3
+    Improve auto-maximize fn to maximize windows which size is equal to the available size
+    Fix toogleMaximize fn when window is solely maximized verticaly or horizontaly
+    Fix #2 : title visiblity when the user unmaximize windows
+4.10.2
+    Change top border creation for hiding capabilities (add frameTopBorder and frameTitle functions)
+    Split title-*.xpm into title and top border part if top-3-active.xpm don't exist
+    add optional top_border_height and top_border_maximize parameters.
+    update french translations
+4.10.1
+    Added titleless maximization feature
+    Fix frameSetShape function
+
+
+xfwm4 :
+=======
 
 4.10.1
 ======
@@ -19,10 +31,6 @@ xfwm4-titleless :
 - Translation updates: Arabic, Bulgarian, Catalan (Valencian), 
   German, Greek, French, Hindi, Croatian, Indonesian, Polish, Slovak, 
   Serbian, Swedish, Turkish, Uyghur.
-
-xfwm4-titleless :
-- Added titleless maximization feature
-- Fix frameSetShape function
 
 4.10.0
 ======
@@ -608,4 +616,3 @@ xfwm4-titleless :
 ================
 
 - First public release for xfce-4.4
-
