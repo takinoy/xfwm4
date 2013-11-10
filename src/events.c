@@ -286,6 +286,19 @@ toggle_show_desktop (ScreenInfo *screen_info)
                      myDisplayGetCurrentTime (screen_info->display_info));
 }
 
+static void
+toggle_title_on_maximize (ScreenInfo *screen_info)
+{
+    if (screen_info->params->titleless_maximize)
+    {
+        xfconf_channel_set_bool (screen_info->xfwm4_channel, "/general/titleless_maximize", FALSE);
+    }
+    else
+    {
+        xfconf_channel_set_bool (screen_info->xfwm4_channel, "/general/titleless_maximize", TRUE);
+    }
+}
+
 static eventFilterStatus
 handleMotionNotify (DisplayInfo *display_info, XMotionEvent * ev)
 {
@@ -379,6 +392,9 @@ handleKeyPress (DisplayInfo *display_info, XKeyEvent * ev)
                 break;
             case KEY_TOGGLE_FULLSCREEN:
                 clientToggleFullscreen (c);
+                break;
+            case KEY_TOGGLE_TITLE_ON_MAXIMIZE:
+                toggle_title_on_maximize (screen_info);
                 break;
             case KEY_MOVE_NEXT_WORKSPACE:
                 workspaceSwitch (screen_info, screen_info->current_ws + 1, c, TRUE, ev->time);

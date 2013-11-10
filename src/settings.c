@@ -653,6 +653,7 @@ loadKeyBindings (ScreenInfo *screen_info)
     parseShortcut (screen_info, KEY_TILE_UP, "tile_up_key", shortcuts);
     parseShortcut (screen_info, KEY_TOGGLE_ABOVE, "above_key", shortcuts);
     parseShortcut (screen_info, KEY_TOGGLE_FULLSCREEN, "fullscreen_key", shortcuts);
+    parseShortcut (screen_info, KEY_TOGGLE_TITLE_ON_MAXIMIZE, "title_on_maximize_key", shortcuts);
     parseShortcut (screen_info, KEY_UP_WORKSPACE, "up_workspace_key", shortcuts);
 
     for (i = 0; i < 12; i++)

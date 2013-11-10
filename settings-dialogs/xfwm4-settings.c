@@ -1649,6 +1649,15 @@ xfwm_settings_initialize_shortcuts (XfwmSettings *settings)
                               -1);
         }
 
+      /* TODO: move it in xfce-shortcuts-xfwm4.c from libxfce4ui */
+      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          SHORTCUTS_NAME_COLUMN,
+                          _("Toggle title on maximized windows"),
+                          SHORTCUTS_FEATURE_COLUMN,
+                          "title_on_maximize_key",
+                          -1);
+
       g_list_free (feature_list);
     }
 }
