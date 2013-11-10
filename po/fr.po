@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfwm4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-01 09:39+0100\n"
-"PO-Revision-Date: 2013-11-01 09:43+0100\n"
+"POT-Creation-Date: 2013-11-10 19:35+0100\n"
+"PO-Revision-Date: 2013-11-10 19:35+0100\n"
 "Last-Translator: Cédric Leporcq <cedl38@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/xfce/language/"
 "fr/)\n"
@@ -375,12 +375,16 @@ msgstr "Impossible d'initialiser xfconf. Raison : %s"
 msgid "Could not create the settings dialog."
 msgstr "Impossible de créer la boîte de dialogue des paramètres."
 
-#: ../settings-dialogs/xfwm4-settings.c:1901
-#: ../settings-dialogs/xfwm4-settings.c:1902
+#: ../settings-dialogs/xfwm4-settings.c:1656
+msgid "Toggle title on maximized windows"
+msgstr "Basculer le titre des fenêtres maximisées"
+
+#: ../settings-dialogs/xfwm4-settings.c:1910
+#: ../settings-dialogs/xfwm4-settings.c:1911
 msgid "Reset to Defaults"
 msgstr "Réinitialiser aux valeurs par défaut"
 
-#: ../settings-dialogs/xfwm4-settings.c:1903
+#: ../settings-dialogs/xfwm4-settings.c:1912
 msgid ""
 "This will reset all shortcuts to their default values. Do you really want to "
 "do this?"
