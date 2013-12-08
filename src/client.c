@@ -3069,10 +3069,28 @@ clientNewMaxState (Client *c, XWindowChanges *wc, int mode)
         {
             FLAG_UNSET (c->flags, CLIENT_FLAG_MAXIMIZED);
             wc->x = c->old_x;
-            wc->y = c->old_y;
             wc->width = c->old_width;
-            wc->height = c->old_height;
+            if (c->screen_info->params->titleless_maximize)
+            {
+                /* If old_y is lower than the title size increase it to
+                 * display the title in the visible area */
+                wc->y = c->y + frameDecorationTop (c->screen_info) - frameTopBorder (c);
 
+                if (c->old_y > wc->y)
+                {
+                    wc->y = c->old_y;
+                    wc->height = c->old_height;
+                }
+                else
+                {
+                    wc->height = c->height - (frameDecorationTop (c->screen_info) - frameTopBorder (c));
+                }
+            }
+            else
+            {
+                wc->y = c->old_y;
+                wc->height = c->old_height;
+            }
             return;
         }
     }
