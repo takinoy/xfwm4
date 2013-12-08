@@ -1735,6 +1735,7 @@ clientResize (Client * c, int handle, XEvent * ev)
     FLAG_UNSET (c->xfwm_flags, XFWM_FLAG_SAVED_POS);
 
     FLAG_SET (c->xfwm_flags, XFWM_FLAG_MOVING_RESIZING);
+
     TRACE ("entering resize loop");
     eventFilterPush (display_info->xfilter, clientResizeEventFilter, &passdata);
     gtk_main ();
@@ -1755,22 +1756,26 @@ clientResize (Client * c, int handle, XEvent * ev)
 
     configure_flags = NO_CFG_FLAG;
 
+    wc.x = c->x;
+    wc.width = c->width;
+    wc.y = c->y;
+    wc.height = c->height;
+
     if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED) &&
         ((w_orig != c->width) || (h_orig != c->height)))
     {
         if (c->screen_info->params->titleless_maximize)
         {
+            wc.x = c->x;
+            wc.y = c->y + frameDecorationTop (c->screen_info) - frameTopBorder (c);
+            wc.width = c->width;
+            wc.height = c->height - (frameDecorationTop (c->screen_info) - frameTopBorder (c));
             /* force redraw titleless window when maximized and resized */
             configure_flags = CFG_FORCE_REDRAW;
         }
-
         clientRemoveMaximizeFlag (c);
     }
 
-    wc.x = c->x;
-    wc.y = c->y;
-    wc.width = c->width;
-    wc.height = c->height;
     clientConfigure (c, &wc, CWX | CWY | CWHeight | CWWidth, configure_flags);
 #ifdef HAVE_XSYNC
     clientXSyncClearTimeout (c);
