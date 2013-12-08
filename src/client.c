@@ -3063,7 +3063,7 @@ clientNewMaxState (Client *c, XWindowChanges *wc, int mode)
          * otherwise it's too confusing when the window changes
          * from horiz to vertical maximization or vice-versa.
          */
-        if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
+        if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED))
         {
             FLAG_UNSET (c->flags, CLIENT_FLAG_MAXIMIZED);
             wc->x = c->old_x;
@@ -3071,6 +3071,16 @@ clientNewMaxState (Client *c, XWindowChanges *wc, int mode)
             wc->width = c->old_width;
             wc->height = c->old_height;
 
+            return;
+        }
+        else if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED_HORIZ))
+        {
+            FLAG_SET (c->flags, CLIENT_FLAG_MAXIMIZED_VERT);
+            return;
+        }
+        else if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED_VERT))
+        {
+            FLAG_SET (c->flags, CLIENT_FLAG_MAXIMIZED_HORIZ);
             return;
         }
     }
@@ -3319,11 +3329,6 @@ clientTile (Client *c, gint cx, gint cy, tilePositionType tile, gboolean send_co
         default:
             return FALSE;
             break;
-    }
-
-    if (!FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
-    {
-        clientSaveSizePos (c);
     }
 
     old_flags = c->flags;
