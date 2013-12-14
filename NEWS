@@ -2,23 +2,26 @@
 xfwm4-titleless:
 ================
 
+4.11.1
+    Improve auto-maximize fn to maximize windows which size is equal to the available size
+    Fix toogleMaximize fn when window is solely maximized verticaly or horizontaly
+    Fix #2 : title visiblity when the user unmaximize windows
+    I18n: Update translation fr (100%).
+    Add title_on_maximize_key shortcut
+    merge branch master
 4.11.0
-======
-- Remove unused-variable in main.c to fix gcc warning
-- Update French translations
-- Upgrade to xfwm4 4.11.0
+    Remove unused-variable in main.c to fix gcc warning
+    Update French translations
+    Upgrade to xfwm4 4.11.0
 
 4.10.2
-======
-- Change top border creation for hiding capabilities (add frameTopBorder and frameTitle functions)
-- Split title-*.xpm into title and top border part if top-3-active.xpm don't exist
-- add optional top_border_height and top_border_maximize parameters.
-- update french translations
-
+    Change top border creation for hiding capabilities (add frameTopBorder and frameTitle functions)
+    Split title-*.xpm into title and top border part if top-3-active.xpm don't exist
+    add optional top_border_height and top_border_maximize parameters.
+    update french translations
 4.10.1
-======
-- Added titleless maximization feature
-- Fix frameSetShape function
+    Added titleless maximization feature
+    Fix frameSetShape function
 
 ======
 xfwm4:
