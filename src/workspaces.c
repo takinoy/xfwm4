@@ -527,6 +527,8 @@ workspaceUpdateArea (ScreenInfo *screen_info)
     int prev_bottom;
     guint i;
 
+    GdkRectangle workarea,struttmp;
+
     g_return_if_fail (screen_info != NULL);
     g_return_if_fail (screen_info->margins != NULL);
     g_return_if_fail (screen_info->gnome_margins != NULL);
@@ -544,11 +546,53 @@ workspaceUpdateArea (ScreenInfo *screen_info)
         screen_info->margins[i] = screen_info->gnome_margins[i];
     }
 
+    /* NET_WORKAREA doesn't support L shaped displays at all.
+       gdk works around this by ignoring it unless dealing with the primary monitor.
+       Mimic this behaviour by ignoring struts not on the primary display when calculating NET_WORKAREA */
+
+    gdk_screen_get_monitor_geometry (screen_info->gscr, gdk_screen_get_primary_monitor(screen_info->gscr), &workarea);
+
     for (c = screen_info->clients, i = 0; i < screen_info->client_count; c = c->next, i++)
     {
         if (FLAG_TEST (c->flags, CLIENT_FLAG_HAS_STRUT)
             && FLAG_TEST (c->xfwm_flags, XFWM_FLAG_VISIBLE))
         {
+            if(c->struts[STRUTS_TOP]) {
+                struttmp.x = c->struts[STRUTS_TOP_START_X];
+                struttmp.y = c->struts[STRUTS_TOP]-1;
+                struttmp.width = c->struts[STRUTS_TOP_END_X] - c->struts[STRUTS_TOP_START_X];
+                struttmp.height = 1;
+                if(!gdk_rectangle_intersect(&workarea, &struttmp, NULL))
+                    continue;
+            }
+
+            if(c->struts[STRUTS_BOTTOM]) {
+                struttmp.x = c->struts[STRUTS_BOTTOM_START_X];
+                struttmp.y = c->struts[STRUTS_BOTTOM];
+                struttmp.width = c->struts[STRUTS_BOTTOM_END_X] - c->struts[STRUTS_BOTTOM_START_X];
+                struttmp.height = 1;
+                if(!gdk_rectangle_intersect(&workarea, &struttmp, NULL))
+                    continue;
+            }
+
+            if(c->struts[STRUTS_LEFT]) {
+                struttmp.x = c->struts[STRUTS_LEFT]-1;
+                struttmp.y = c->struts[STRUTS_LEFT_START_Y];
+                struttmp.width = 1;
+                struttmp.height = c->struts[STRUTS_LEFT_END_Y] - c->struts[STRUTS_LEFT_START_Y];
+                if(!gdk_rectangle_intersect(&workarea, &struttmp, NULL))
+                    continue;
+            }
+
+            if(c->struts[STRUTS_RIGHT]) {
+                struttmp.x = c->struts[STRUTS_RIGHT];
+                struttmp.y = c->struts[STRUTS_RIGHT_START_Y];
+                struttmp.width = 1;
+                struttmp.height = c->struts[STRUTS_RIGHT_END_Y] - c->struts[STRUTS_RIGHT_START_Y];
+                if(!gdk_rectangle_intersect(&workarea, &struttmp, NULL))
+                    continue;
+            }
+
             screen_info->margins[STRUTS_TOP]    = MAX (screen_info->margins[STRUTS_TOP],    c->struts[STRUTS_TOP]);
             screen_info->margins[STRUTS_LEFT]   = MAX (screen_info->margins[STRUTS_LEFT],   c->struts[STRUTS_LEFT]);
             screen_info->margins[STRUTS_RIGHT]  = MAX (screen_info->margins[STRUTS_RIGHT],  c->struts[STRUTS_RIGHT]);
