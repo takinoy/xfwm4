@@ -319,6 +319,12 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
         "top-right"
     };
 
+    static const char *no_title_names[] = {
+        "-left",
+        "-right",
+        ""
+    };
+
     static const char *button_names[] = {
         "menu",
         "stick",
@@ -561,6 +567,22 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
                                 theme, imagename, colsym);
         }
 
+    }
+    for (i = 0; i < NO_TITLE_COUNT; i++)
+    {
+        g_snprintf(imagename, sizeof (imagename), "no-title-top%s-active", no_title_names[i]);
+        if(!xfwmPixmapLoad (screen_info, &screen_info->no_title[i][ACTIVE], theme, imagename, colsym))
+        {
+            g_snprintf(imagename, sizeof (imagename), "bottom%s-active", no_title_names[i]);
+            xfwmPixmapLoadFlipped (screen_info, &screen_info->no_title[i][ACTIVE], theme, imagename, colsym, XFWM_PIXMAP_FLIP_VERTICAL);
+        }
+
+        g_snprintf(imagename, sizeof (imagename), "no-title-top%s-inactive", no_title_names[i]);
+        if(!xfwmPixmapLoad (screen_info, &screen_info->no_title[i][INACTIVE], theme, imagename, colsym))
+        {
+            g_snprintf(imagename, sizeof (imagename), "bottom%s-inactive", no_title_names[i]);
+            xfwmPixmapLoadFlipped (screen_info, &screen_info->no_title[i][INACTIVE], theme, imagename, colsym, XFWM_PIXMAP_FLIP_VERTICAL);
+        }
     }
 
     screen_info->box_gc = createGC (screen_info, "#FFFFFF", GXxor, NULL, 2, TRUE);
