@@ -85,6 +85,7 @@ struct _ScreenInfo
     xfwmPixmap corners[CORNER_COUNT][2];
     xfwmPixmap sides[SIDE_COUNT][2];
     xfwmPixmap title[TITLE_COUNT][2];
+    xfwmPixmap no_title[NO_TITLE_COUNT][2];
     xfwmPixmap top[TITLE_COUNT][2];
 
     /* Per screen graphic contexts */
