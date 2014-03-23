@@ -128,7 +128,17 @@ frameTopBorder (Client * c)
     {
         return 0;
     }
-    return c->screen_info->params->top_border_height;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->params->top_border_height;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP][ACTIVE].height;
+    }
+
 }
 
 /* frame of the title without top border */
@@ -257,8 +267,16 @@ frameTopLeftWidth (Client * c, int state)
     {
         return 0;
     }
-    return c->screen_info->corners[CORNER_TOP_LEFT][state].width;
-
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_LEFT][state].width;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP_LEFT][state].width;
+    }
 }
 
 static int
@@ -272,7 +290,16 @@ frameTopRightWidth (Client * c, int state)
     {
         return 0;
     }
-    return c->screen_info->corners[CORNER_TOP_RIGHT][state].width;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_RIGHT][state].width;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP_RIGHT][state].width;
+    }
 }
 
 static int
@@ -281,7 +308,16 @@ frameTopLeftHeight (Client * c, int state)
     TRACE ("entering frameTopLeftHeight");
 
     g_return_val_if_fail (c != NULL, 0);
-    return c->screen_info->corners[CORNER_TOP_LEFT][state].height;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_LEFT][state].height;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP_LEFT][state].height;
+    }
 }
 
 static int
@@ -290,7 +326,16 @@ frameTopRightHeight (Client * c, int state)
     TRACE ("entering frameTopRightHeight");
 
     g_return_val_if_fail (c != NULL, 0);
-    return c->screen_info->corners[CORNER_TOP_RIGHT][state].height;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_RIGHT][state].height;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP_RIGHT][state].height;
+    }
 }
 
 static int
@@ -299,7 +344,16 @@ frameTopLeftMask (Client * c, int state)
     TRACE ("entering frameTopLeftMask");
 
     g_return_val_if_fail (c != NULL, 0);
-    return c->screen_info->corners[CORNER_TOP_LEFT][state].mask;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_LEFT][state].mask;
+    }
+    else
+    {
+        return c->screen_info->no_title[NO_TITLE_TOP_LEFT][state].mask;
+    }
 }
 
 static int
@@ -308,7 +362,14 @@ frameTopRightMask (Client * c, int state)
     TRACE ("entering frameTopRightMask");
 
     g_return_val_if_fail (c != NULL, 0);
-    return c->screen_info->corners[CORNER_TOP_RIGHT][state].mask;
+    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && c->screen_info->params->titleless_maximize))
+    {
+        return c->screen_info->corners[CORNER_TOP_RIGHT][state].mask;
+    } else {
+        return c->screen_info->no_title[NO_TITLE_TOP_RIGHT][state].mask;
+    }
 }
 
 static int
@@ -1168,8 +1229,7 @@ frameDrawWin (Client * c)
             && !c->screen_info->params->top_border_maximize))
         {
             /* hide title but display top border */
-            xfwmPixmapFill (&c->screen_info->top[TITLE_1][state], &frame_pix.pm_sides[SIDE_TOP], 0, 0, top_width / 2, frameTopBorder (c));
-            xfwmPixmapFill (&c->screen_info->top[TITLE_5][state], &frame_pix.pm_sides[SIDE_TOP], top_width / 2, 0, top_width - top_width / 2, frameTopBorder (c));
+            xfwmPixmapFill (&screen_info->no_title[NO_TITLE_TOP][state], &frame_pix.pm_sides[SIDE_TOP], 0, 0, top_width, frameTop (c));
         }
 
         /* hide the title and buttons */
@@ -1193,10 +1253,22 @@ frameDrawWin (Client * c)
         /* Corners are never resized, we need to update them separately */
         if (requires_clearing)
         {
-            xfwmWindowSetBG (&c->corners[CORNER_TOP_LEFT],
-                &screen_info->corners[CORNER_TOP_LEFT][state]);
-            xfwmWindowSetBG (&c->corners[CORNER_TOP_RIGHT],
-                &screen_info->corners[CORNER_TOP_RIGHT][state]);
+		    if (FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
+		        && !(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+		            && c->screen_info->params->titleless_maximize))
+	        {
+	            xfwmWindowSetBG (&c->corners[CORNER_TOP_LEFT],
+                    &screen_info->corners[CORNER_TOP_LEFT][state]);
+	            xfwmWindowSetBG (&c->corners[CORNER_TOP_RIGHT],
+                    &screen_info->corners[CORNER_TOP_RIGHT][state]);
+            }
+            else
+            {
+                xfwmWindowSetBG (&c->corners[CORNER_TOP_LEFT],
+                    &screen_info->no_title[NO_TITLE_TOP_LEFT][state]);
+                xfwmWindowSetBG (&c->corners[CORNER_TOP_RIGHT],
+                    &screen_info->no_title[NO_TITLE_TOP_RIGHT][state]);
+            }
             xfwmWindowSetBG (&c->corners[CORNER_BOTTOM_LEFT],
                 &screen_info->corners[CORNER_BOTTOM_LEFT][state]);
             xfwmWindowSetBG (&c->corners[CORNER_BOTTOM_RIGHT],
