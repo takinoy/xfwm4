@@ -140,6 +140,7 @@ frameTitle (Client * c)
     g_return_val_if_fail (c != NULL, 0);
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
         || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || !FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
         || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
             && c->screen_info->params->titleless_maximize))
     {
@@ -1110,7 +1111,7 @@ frameDrawWin (Client * c)
 
     if (frameTopBorder (c) > 0)
     {
-    xfwmPixmapCreate (screen_info, &frame_pix.pm_sides[SIDE_TOP], top_width, frameTopBorder (c));
+		xfwmPixmapCreate (screen_info, &frame_pix.pm_sides[SIDE_TOP], top_width, frameTopBorder (c));
     }
 
     /* test if the title have to be displayed */
@@ -1127,10 +1128,10 @@ frameDrawWin (Client * c)
     }
     else
     {
-        /* hide title but display top border */
-        if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
-            && c->screen_info->params->top_border_maximize)
+        if (!(FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
+            && !c->screen_info->params->top_border_maximize))
         {
+            /* hide title but display top border */
             xfwmPixmapFill (&c->screen_info->top[TITLE_1][state], &frame_pix.pm_sides[SIDE_TOP], 0, 0, top_width / 2, frameTopBorder (c));
             xfwmPixmapFill (&c->screen_info->top[TITLE_5][state], &frame_pix.pm_sides[SIDE_TOP], top_width / 2, 0, top_width - top_width / 2, frameTopBorder (c));
         }
