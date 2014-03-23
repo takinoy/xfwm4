@@ -549,13 +549,13 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
         for (i = 0; i < TITLE_COUNT; i++)
         {
             g_snprintf(imagename, sizeof (imagename), "title-%d-active", i + 1);
-            xfwmPixmapSplit (screen_info, &screen_info->top[i][ACTIVE],
+            xfwmPixmapLoadSplit (screen_info, &screen_info->top[i][ACTIVE],
                                 screen_info->params->top_border_height,
                                 &screen_info->title[i][ACTIVE],
                                 theme, imagename, colsym);
 
             g_snprintf(imagename, sizeof (imagename), "title-%d-inactive", i + 1);
-            xfwmPixmapSplit (screen_info, &screen_info->top[i][INACTIVE],
+            xfwmPixmapLoadSplit (screen_info, &screen_info->top[i][INACTIVE],
                                 screen_info->params->top_border_height,
                                 &screen_info->title[i][INACTIVE],
                                 theme, imagename, colsym);

@@ -65,7 +65,7 @@ gboolean                 xfwmPixmapLoad                         (ScreenInfo *,
                                                                  const gchar *,
                                                                  const gchar *,
                                                                  xfwmColorSymbol *);
-gboolean                 xfwmPixmapSplit                        (ScreenInfo * screen_info,
+gboolean                 xfwmPixmapLoadSplit                        (ScreenInfo * screen_info,
                                                                  xfwmPixmap * pmA, int h,
                                                                  xfwmPixmap * pmB, const
                                                                  gchar * dir, const gchar *
