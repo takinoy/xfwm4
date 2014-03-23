@@ -2671,6 +2671,7 @@ clientShade (Client *c)
 
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
         || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || !FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
         || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
             && c->screen_info->params->titleless_maximize))
     {
