@@ -998,11 +998,12 @@ xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, co
 }
 
 gboolean
-xfwmPixmapSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * pmB, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
+xfwmPixmapLoadSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * pmB, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
 {
     GdkPixbuf *pixbuf;
     GdkPixbuf *pixbufA;
     GdkPixbuf *pixbufB;
+	gint y;
 
     TRACE ("entering xfwmPixmapSplit");
 
@@ -1025,17 +1026,27 @@ xfwmPixmapSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * 
     if (pmA != NULL)
     {
         xfwmPixmapInit (screen_info, pmA);
-        pixbufA = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), h);
-        gdk_pixbuf_copy_area (pixbuf, 0, 0, gdk_pixbuf_get_width (pixbuf), h, pixbufA, 0, 0);
-        pixmap_create_from_pixbuf (screen_info, pixbufA, pmA);
+        if (h > 0)
+        {
+	        pixbufA = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), h);
+	        gdk_pixbuf_copy_area (pixbuf, 0, 0, gdk_pixbuf_get_width (pixbuf), h, pixbufA, 0, 0);
+	        pixmap_create_from_pixbuf (screen_info, pixbufA, pmA);
+		}
     }
+    
     if (pmB != NULL)
     {
         xfwmPixmapInit (screen_info, pmB);
-        pixbufB = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h);
-        gdk_pixbuf_copy_area (pixbuf, 0, h, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h, pixbufB, 0, 0);
-        pixmap_create_from_pixbuf (screen_info, pixbufB, pmB);
+		y = gdk_pixbuf_get_height (pixbuf) - h;
+        if (y > 0)
+        {
+	        pixbufB = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, gdk_pixbuf_get_width (pixbuf), y);
+	        gdk_pixbuf_copy_area (pixbuf, 0, h, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf) - h, pixbufB, 0, 0);
+	        pixmap_create_from_pixbuf (screen_info, pixbufB, pmB);
+		}
     }
+
+    g_object_unref (pixbuf);
 
     return TRUE;
 }
