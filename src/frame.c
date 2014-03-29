@@ -506,7 +506,7 @@ frameCreateTitlePixmap (Client * c, int state, int left, int right, xfwmPixmap *
     top_height = frameTopBorder (c);
 
     /* center the title in the frameTitle space (top border is not included) */
-    title_y = MAX (0, voffset + (frameTitle (c) - title_height - 2) / 2);
+    title_y = MAX (-2, voffset + (frameTitle (c) - title_height - 2) / 2);
 
     w1 = 0;
     w2 = screen_info->title[TITLE_2][state].width;
