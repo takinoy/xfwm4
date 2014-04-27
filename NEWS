@@ -3,6 +3,10 @@ xfwm4-titleless:
 ================
 
 4.11.2
+    Adjust vertical title centering
+    Support for client side window decorations (gtk headers bars)
+    Workaround for NET_WORKAREA and L-shaped multimonitor setups.
+    Update translation fr (100%)
     merge branch master
 
 4.11.1
@@ -651,4 +655,3 @@ xfwm4:
 ================
 
 - First public release for xfce-4.4
-
