@@ -66,6 +66,7 @@ struct _MoveResizeData
     gboolean is_transient;
     gboolean move_resized;
     gboolean released;
+    gboolean toggled_maximize;
     guint button;
     gint cancel_x, cancel_y;
     gint cancel_w, cancel_h;
@@ -820,7 +821,6 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 static eventFilterStatus
 clientMoveEventFilter (XEvent * xevent, gpointer data)
 {
-    static gboolean toggled_maximize = FALSE;
     unsigned long configure_flags;
     ScreenInfo *screen_info;
     DisplayInfo *display_info;
@@ -907,9 +907,9 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
             {
                 workspaceSwitch (screen_info, passdata->cancel_workspace, c, FALSE, xevent->xkey.time);
             }
-            if (toggled_maximize)
+            if (passdata->toggled_maximize)
             {
-                toggled_maximize = FALSE;
+                passdata->toggled_maximize = FALSE;
                 if (clientToggleMaximized (c, CLIENT_FLAG_MAXIMIZED, FALSE))
                 {
                     configure_flags = CFG_FORCE_REDRAW;
@@ -961,10 +961,6 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
                 xratio = (xevent->xmotion.x_root - frameExtentX (c)) / (double) frameExtentWidth (c);
                 yratio = (xevent->xmotion.y_root - frameExtentY (c)) / (double) frameExtentHeight (c);
 
-                if (FLAG_TEST_ALL(c->flags, CLIENT_FLAG_MAXIMIZED))
-                {
-                    toggled_maximize = TRUE;
-                }
                 if (clientToggleMaximized (c, c->flags & CLIENT_FLAG_MAXIMIZED, FALSE))
                 {
                     passdata->move_resized = TRUE;
@@ -997,13 +993,13 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
         c->y = passdata->oy + (xevent->xmotion.y_root - passdata->my);
 
         clientSnapPosition (c, prev_x, prev_y);
-        if (screen_info->params->restore_on_move && toggled_maximize)
+        if (screen_info->params->restore_on_move && !screen_info->params->tile_on_move)
         {
             if ((clientConstrainPos (c, FALSE) & CLIENT_CONSTRAINED_TOP) &&
                  clientToggleMaximized (c, CLIENT_FLAG_MAXIMIZED, FALSE))
             {
                 configure_flags = CFG_FORCE_REDRAW;
-                toggled_maximize = FALSE;
+                passdata->toggled_maximize = FALSE;
                 passdata->move_resized = TRUE;
             }
         }
@@ -1057,7 +1053,7 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
     if (!moving)
     {
         TRACE ("event loop now finished");
-        toggled_maximize = FALSE;
+        passdata->toggled_maximize = FALSE;
         clientMoveWarp (c, NULL);
         if (!FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
         {
@@ -1124,6 +1120,15 @@ clientMove (Client * c, XEvent * ev)
     {
         clientSetHandle(&passdata, NO_HANDLE);
         passdata.released = passdata.use_keys = TRUE;
+    }
+
+    if (screen_info->params->restore_on_move && FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED))
+    {
+        passdata.toggled_maximize = TRUE;
+    }
+    else
+    {
+        passdata.toggled_maximize = FALSE;
     }
 
     g1 = myScreenGrabKeyboard (screen_info, myDisplayGetCurrentTime (display_info));
