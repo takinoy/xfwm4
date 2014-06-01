@@ -182,6 +182,7 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
     GtkWidget *raise_with_any_button_check = GTK_WIDGET (gtk_builder_get_object (builder, "raise_with_any_button_check"));
     GtkWidget *borderless_maximize_check = GTK_WIDGET (gtk_builder_get_object (builder, "borderless_maximize_check"));
     GtkWidget *restore_on_move_check = GTK_WIDGET (gtk_builder_get_object (builder, "restore_on_move_check"));
+    GtkWidget *maximize_on_move_check = GTK_WIDGET (gtk_builder_get_object (builder, "maximize_on_move_check"));
     GtkWidget *tile_on_move_check = GTK_WIDGET (gtk_builder_get_object (builder, "tile_on_move_check"));
     GtkWidget *snap_resist_check = GTK_WIDGET (gtk_builder_get_object (builder, "snap_resist_check"));
     GtkWidget *urgent_blink = GTK_WIDGET (gtk_builder_get_object (builder, "urgent_blink"));
@@ -299,6 +300,10 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
                       "toggled",
                       G_CALLBACK (cb_restore_on_move_check_button_toggled),
                       tile_on_move_check);
+    g_signal_connect (G_OBJECT (restore_on_move_check),
+                      "toggled",
+                      G_CALLBACK (cb_restore_on_move_check_button_toggled),
+                      maximize_on_move_check);
 
     /* Bind easy properties */
     /* Cycling tab */
@@ -351,6 +356,10 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
                             G_TYPE_BOOLEAN,
                             (GObject *)tile_on_move_check, "active");
     xfconf_g_property_bind (xfwm4_channel,
+                            "/general/maximize_on_move",
+                            G_TYPE_BOOLEAN,
+                            (GObject *)maximize_on_move_check, "active");
+    xfconf_g_property_bind (xfwm4_channel,
                             "/general/snap_resist",
                             G_TYPE_BOOLEAN,
                             (GObject *)snap_resist_check, "active");
@@ -369,6 +378,8 @@ wm_tweaks_dialog_configure_widgets (GtkBuilder *builder)
     gtk_widget_set_sensitive (repeat_urgent_blink,
                               gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (urgent_blink)));
     gtk_widget_set_sensitive (tile_on_move_check,
+                              gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (restore_on_move_check)));
+    gtk_widget_set_sensitive (maximize_on_move_check,
                               gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (restore_on_move_check)));
 
     /* Workspaces tab */
