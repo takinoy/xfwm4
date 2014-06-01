@@ -694,6 +694,7 @@ loadSettings (ScreenInfo *screen_info)
         {"margin_right", NULL, G_TYPE_INT, FALSE},
         {"margin_top", NULL, G_TYPE_INT, FALSE},
         {"maximized_offset", NULL, G_TYPE_INT, TRUE},
+        {"maximize_on_move", NULL, G_TYPE_BOOLEAN, TRUE},
         {"move_opacity", NULL, G_TYPE_INT, TRUE},
         {"placement_ratio", NULL, G_TYPE_INT, TRUE},
         {"placement_mode", NULL, G_TYPE_STRING, TRUE},
@@ -801,6 +802,8 @@ loadSettings (ScreenInfo *screen_info)
         CLAMP (getIntValue ("frame_opacity", rc), 0, 100);
     screen_info->params->inactive_opacity =
         CLAMP (getIntValue ("inactive_opacity", rc), 0, 100);
+    screen_info->params->maximize_on_move =
+        getBoolValue ("maximize_on_move", rc);
     screen_info->params->move_opacity =
         CLAMP (getIntValue ("move_opacity", rc), 0, 100);
     screen_info->params->resize_opacity =
@@ -1338,6 +1341,10 @@ cb_xfwm4_channel_property_changed(XfconfChannel *channel, const gchar *property_
                 else if (!strcmp (name, "tile_on_move"))
                 {
                     screen_info->params->tile_on_move = g_value_get_boolean (value);
+                }
+                else if (!strcmp (name, "maximize_on_move"))
+                {
+                    screen_info->params->maximize_on_move = g_value_get_boolean (value);
                 }
                 else if (!strcmp (name, "sync_to_vblank"))
                 {

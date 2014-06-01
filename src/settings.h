@@ -209,6 +209,7 @@ struct _XfwmParams
     gboolean focus_hint;
     gboolean focus_new;
     gboolean full_width_title;
+    gboolean maximize_on_move;
     gboolean mousewheel_rollup;
     gboolean prevent_focus_stealing;
     gboolean raise_on_click;

@@ -800,18 +800,21 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
         }
     }
 
-    if (!screen_info->params->wrap_windows || layout.rows < 2)
+    if (!screen_info->params->maximize_on_move)
     {
-        if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
-            (y >= disp_y - 1) && (y < disp_y + dist))
+        if (!screen_info->params->wrap_windows || layout.rows < 2)
         {
-            return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
-        }
-
-        if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
-            (y >= disp_max_y - dist) && (y < disp_max_y + 1))
-        {
-            return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+            if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
+                (y >= disp_y - 1) && (y < disp_y + dist))
+            {
+                    return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
+            }
+    
+            if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
+                (y >= disp_max_y - dist) && (y < disp_max_y + 1))
+            {
+                    return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+            }
         }
     }
 
@@ -993,7 +996,8 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
         c->y = passdata->oy + (xevent->xmotion.y_root - passdata->my);
 
         clientSnapPosition (c, prev_x, prev_y);
-        if (screen_info->params->restore_on_move && !screen_info->params->tile_on_move)
+        if (screen_info->params->restore_on_move
+            && screen_info->params->maximize_on_move)
         {
             if ((clientConstrainPos (c, FALSE) & CLIENT_CONSTRAINED_TOP) &&
                  clientToggleMaximized (c, CLIENT_FLAG_MAXIMIZED, FALSE))
@@ -1003,7 +1007,7 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
                 passdata->move_resized = TRUE;
             }
         }
-        else if (!clientMoveTile (c, (XMotionEvent *) xevent))
+        if (!clientMoveTile (c, (XMotionEvent *) xevent))
         {
             clientConstrainPos(c, FALSE);
         }
