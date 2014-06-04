@@ -3132,12 +3132,7 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
 {
     ScreenInfo *screen_info;
     int full_x, full_y, full_w, full_h;
-    int tmp_x, tmp_y, tmp_w, tmp_h;
 
-    tmp_x = frameX (c);
-    tmp_y = frameY (c);
-    tmp_h = frameHeight (c);
-    tmp_w = frameWidth (c);
     screen_info = c->screen_info;
 
     full_x = MAX (screen_info->params->xfwm_margins[STRUTS_LEFT], rect->x);
@@ -3147,10 +3142,11 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
     full_h = MIN (screen_info->height - screen_info->params->xfwm_margins[STRUTS_BOTTOM],
                   rect->y + rect->height) - full_y;
 
+    /* First of all lets check what is the largest size avaliable, not covering structs */
+    clientMaxSpace (screen_info, &full_x, &full_y, &full_w, &full_h);
+
     if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED))
     {
-        /* Adjust size to the largest size available, not covering struts */
-        clientMaxSpace (screen_info, &full_x, &full_y, &full_w, &full_h);
         wc->x = full_x + frameLeft (c);
         wc->y = full_y + frameTop (c);
         wc->width = full_w - frameLeft (c) - frameRight (c);
@@ -3165,21 +3161,14 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
         switch (tile)
         {
             case TILE_UP:
-                tmp_h = full_h / 2;
-                tmp_y = full_y;
-                clientMaxSpace (screen_info, &full_x, &tmp_y, &full_w, &tmp_h);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
+                wc->y = full_y + frameTop (c);
+                wc->height = full_h / 2 - frameTop (c) - frameBottom (c);
                 break;
             case TILE_DOWN:
-                tmp_h = full_h / 2;
-                tmp_y = full_y + full_h / 2;
-                clientMaxSpace (screen_info, &full_x, &tmp_y, &full_w, &tmp_h);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
+                wc->y = full_y + full_h / 2 + frameTop (c);
+                wc->height = full_h - full_h / 2 - frameTop (c) - frameBottom (c);
                 break;
             default:
-                clientMaxSpace (screen_info, &full_x, &tmp_y, &full_w, &tmp_h);
                 break;
         }
 
@@ -3195,21 +3184,14 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
         switch (tile)
         {
             case TILE_LEFT:
-                tmp_x = full_x;
-                tmp_w = full_w / 2;
-                clientMaxSpace (screen_info, &tmp_x, &full_y, &tmp_w, &full_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
+                wc->x = full_x + frameLeft (c);
+                wc->width = full_w / 2 - frameLeft (c) - frameRight (c);
                 break;
             case TILE_RIGHT:
-                tmp_x = full_x + full_w /2;
-                tmp_w = full_w / 2;
-                clientMaxSpace (screen_info, &tmp_x, &full_y, &tmp_w, &full_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
+                wc->x = full_x + full_w / 2 + frameLeft (c);
+                wc->width = full_w - full_w / 2 - frameLeft (c) - frameRight (c);
                 break;
             default:
-                clientMaxSpace (screen_info, &tmp_x, &full_y, &tmp_w, &full_h);
                 break;
         }
 
