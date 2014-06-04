@@ -998,6 +998,57 @@ xfwmPixmapLoad (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, co
 }
 
 gboolean
+xfwmPixmapLoadFlipped (ScreenInfo * screen_info, xfwmPixmap * pm, const gchar * dir, const gchar * file, xfwmColorSymbol * cs, gint flip)
+{
+    gchar *filename;
+    gchar *filexpm;
+    GdkPixbuf *pixbuf, *flipped;
+
+    TRACE ("entering xfwmPixmapLoad");
+
+    g_return_val_if_fail (pm != NULL, FALSE);
+    g_return_val_if_fail (dir != NULL, FALSE);
+    g_return_val_if_fail (file != NULL, FALSE);
+
+    xfwmPixmapInit (screen_info, pm);
+    /*
+     * Always try to load the XPM first, using our own routine
+     * that supports XPM color symbol susbstitution (used to
+     * apply the gtk+ colors to the pixmaps).
+     */
+    filexpm = g_strdup_printf ("%s.%s", file, "xpm");
+    filename = g_build_filename (dir, filexpm, NULL);
+    g_free (filexpm);
+    pixbuf = xpm_image_load (filename, cs);
+    g_free (filename);
+
+    /* Compose with other image formats, if any available. */
+    pixbuf = xfwmPixmapCompose (pixbuf, dir, file);
+    if (!pixbuf)
+    {
+        /*
+         * Cannot find a suitable image format for some part,
+         * it's not critical though as most themes are missing
+         * buttons
+         */
+        return FALSE;
+    }
+    if (FLAG_TEST(flip, XFWM_PIXMAP_FLIP_HORIZONTAL)) {
+        flipped = gdk_pixbuf_flip(pixbuf, TRUE);
+        g_object_unref(pixbuf);
+        pixbuf = flipped;
+    }
+    if (FLAG_TEST(flip, XFWM_PIXMAP_FLIP_VERTICAL)) {
+        flipped = gdk_pixbuf_flip(pixbuf, FALSE);
+        g_object_unref(pixbuf);
+        pixbuf = flipped;
+    }
+	pixmap_create_from_pixbuf (screen_info, pixbuf, pm);
+
+    return TRUE;
+}
+
+gboolean
 xfwmPixmapLoadSplit (ScreenInfo * screen_info,xfwmPixmap * pmA, int h, xfwmPixmap * pmB, const gchar * dir, const gchar * file, xfwmColorSymbol * cs)
 {
     GdkPixbuf *pixbuf;

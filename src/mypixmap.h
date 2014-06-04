@@ -37,6 +37,10 @@
 
 #define MYPIXMAP_XPIXMAP(p) (p.pixmap)
 
+#define XFWM_PIXMAP_FLIP_NONE                     (1L << 0)
+#define XFWM_PIXMAP_FLIP_HORIZONTAL               (1L << 1)
+#define XFWM_PIXMAP_FLIP_VERTICAL                 (1L << 2)
+
 typedef struct
 {
     gchar *name;

@@ -914,13 +914,15 @@ clientGetMWMHints (Client *c, gboolean update)
             {
                 if (mwm_hints->decorations & MWM_DECOR_ALL)
                 {
-                    FLAG_SET (c->xfwm_flags, XFWM_FLAG_HAS_BORDER | XFWM_FLAG_HAS_MENU);
+                    FLAG_SET (c->xfwm_flags, XFWM_FLAG_HAS_BORDER | XFWM_FLAG_HAS_MENU | XFWM_FLAG_HAS_TITLE);
                 }
                 else
                 {
-                    FLAG_UNSET (c->xfwm_flags, XFWM_FLAG_HAS_BORDER | XFWM_FLAG_HAS_MENU);
+                    FLAG_UNSET (c->xfwm_flags, XFWM_FLAG_HAS_BORDER | XFWM_FLAG_HAS_MENU | XFWM_FLAG_HAS_TITLE);
                     FLAG_SET (c->xfwm_flags, (mwm_hints-> decorations & (MWM_DECOR_TITLE | MWM_DECOR_BORDER))
                                              ? XFWM_FLAG_HAS_BORDER : 0);
+                    FLAG_SET (c->xfwm_flags, (mwm_hints-> decorations & (MWM_DECOR_TITLE))
+                                             ? XFWM_FLAG_HAS_TITLE : 0);
                     FLAG_SET (c->xfwm_flags, (mwm_hints->decorations & (MWM_DECOR_MENU))
                                              ? XFWM_FLAG_HAS_MENU : 0);
                     /*
@@ -2669,6 +2671,7 @@ clientShade (Client *c)
 
     if (!FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_BORDER)
         || FLAG_TEST (c->flags, CLIENT_FLAG_FULLSCREEN)
+        || !FLAG_TEST (c->xfwm_flags, XFWM_FLAG_HAS_TITLE)
         || (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED)
             && c->screen_info->params->titleless_maximize))
     {

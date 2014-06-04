@@ -98,6 +98,14 @@ enum
 
 enum
 {
+    NO_TITLE_TOP_LEFT = 0,
+    NO_TITLE_TOP_RIGHT,
+    NO_TITLE_TOP,
+    NO_TITLE_COUNT
+};
+
+enum
+{
     CORNER_BOTTOM_LEFT = 0,
     CORNER_BOTTOM_RIGHT,
     CORNER_TOP_LEFT,
