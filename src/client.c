@@ -3185,63 +3185,35 @@ clientNewMaxSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositio
     switch (tile)
     {
         case TILE_DOWN_LEFT:
-                tmp_x = full_x;
-                tmp_w = full_w / 2;
-                tmp_h = full_h / 2;
-                tmp_y = full_y + full_h / 2;
-                clientMaxSpace (screen_info, &tmp_x, &tmp_y, &tmp_w, &tmp_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
-
-
+                wc->x = full_x + frameLeft (c);
+                wc->width = full_w / 2 - frameLeft (c) - frameRight (c);
+                wc->y = full_y + full_h / 2 + frameTop (c);
+                wc->height = full_h - full_h / 2 - frameTop (c) - frameBottom (c);
             break;
         case TILE_DOWN_RIGHT:
-                tmp_x = full_x + full_w /2;
-                tmp_w = full_w / 2;
-                tmp_h = full_h / 2;
-                tmp_y = full_y + full_h / 2;
-                clientMaxSpace (screen_info, &tmp_x, &tmp_y, &tmp_w, &tmp_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
-
+                wc->x = full_x + full_w /2 + frameLeft (c);
+                wc->width = full_w - full_w / 2 - frameLeft (c) - frameRight (c);
+                wc->y = full_y + full_h / 2 + frameTop (c);
+                wc->height = full_h - full_h / 2 - frameTop (c) - frameBottom (c);
             break;
         case TILE_UP_LEFT:
-                tmp_x = full_x;
-                tmp_w = full_w / 2;
-                tmp_h = full_h / 2;
-                tmp_y = full_y;
-                clientMaxSpace (screen_info, &tmp_x, &tmp_y, &tmp_w, &tmp_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
-
+                wc->x = full_x + frameLeft (c);
+                wc->width = full_w / 2 - frameLeft (c) - frameRight (c);
+                wc->y = full_y + frameTop (c);
+                wc->height = full_h / 2 - frameTop (c) - frameBottom (c);
             break;
         case TILE_UP_RIGHT:
-                tmp_x = full_x + full_w /2;
-                tmp_w = full_w / 2;
-                tmp_h = full_h / 2;
-                tmp_y = full_y;
-                clientMaxSpace (screen_info, &tmp_x, &tmp_y, &tmp_w, &tmp_h);
-                wc->x = tmp_x + frameLeft (c);
-                wc->width = tmp_w - frameLeft (c) - frameRight (c);
-                wc->y = tmp_y + frameTop (c);
-                wc->height = tmp_h - frameTop (c) - frameBottom (c);
-
-
+                wc->x = full_x + full_w /2 + frameLeft (c);
+                wc->width = full_w - full_w / 2 - frameLeft (c) - frameRight (c);
+                wc->y = full_y + frameTop (c);
+                wc->height = full_h / 2 - frameTop (c) - frameBottom (c);
             break;
         default:
             return TRUE;
             break;
     }
 
-
     return (wc->height <= c->size->max_height) && (wc->width <= c->size->max_width);
-
 }
 
 gboolean
