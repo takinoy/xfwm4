@@ -104,6 +104,10 @@ enum
     KEY_TILE_LEFT,
     KEY_TILE_RIGHT,
     KEY_TILE_UP,
+    KEY_TILE_DOWN_LEFT,
+    KEY_TILE_DOWN_RIGHT,
+    KEY_TILE_UP_LEFT,
+    KEY_TILE_UP_RIGHT,
     KEY_TOGGLE_ABOVE,
     KEY_TOGGLE_FULLSCREEN,
     KEY_TOGGLE_TITLE_ON_MAXIMIZE,
@@ -212,13 +216,13 @@ struct _XfwmParams
     gboolean focus_hint;
     gboolean focus_new;
     gboolean full_width_title;
+    gboolean maximize_on_move;
     gboolean mousewheel_rollup;
     gboolean prevent_focus_stealing;
     gboolean raise_on_click;
     gboolean raise_on_focus;
     gboolean raise_with_any_button;
     gboolean repeat_urgent_blink;
-    gboolean restore_on_move;
     gboolean scroll_workspaces;
     gboolean show_app_icon;
     gboolean show_dock_shadow;

@@ -246,7 +246,11 @@ typedef enum
     TILE_LEFT,
     TILE_RIGHT,
     TILE_DOWN,
-    TILE_UP
+    TILE_UP,
+    TILE_DOWN_LEFT,
+    TILE_DOWN_RIGHT,
+    TILE_UP_LEFT,
+    TILE_UP_RIGHT
 }
 tilePositionType;
 

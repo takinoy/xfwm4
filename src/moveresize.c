@@ -55,7 +55,8 @@
     ButtonReleaseMask | \
     LeaveWindowMask
 
-#define TILE_DISTANCE 2
+#define TILE_DISTANCE 10
+#define BORDER_TILE_LENGTH_RELATIVE 5
 
 typedef struct _MoveResizeData MoveResizeData;
 struct _MoveResizeData
@@ -66,6 +67,7 @@ struct _MoveResizeData
     gboolean is_transient;
     gboolean move_resized;
     gboolean released;
+    gboolean toggled_maximize;
     guint button;
     gint cancel_x, cancel_y;
     gint cancel_w, cancel_h;
@@ -755,19 +757,12 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 {
     ScreenInfo *screen_info;
     GdkRectangle rect;
-    int x, y, disp_x, disp_y, disp_max_x, disp_max_y, dist;
+    int x, y, disp_x, disp_y, disp_max_x, disp_max_y, dist, dist_corner;
     NetWmDesktopLayout layout;
 
     screen_info = c->screen_info;
 
-    /*
-     * Tiling when moving really relies on restore_on_move to work
-     * reliably so just don't do anything if any of the above requirement
-     * is not met (restore_on_move being disabled is from another time,
-     * we should really not have such an option, I must have been weaked
-     * in the past...)
-     */
-    if (!(screen_info->params->tile_on_move && screen_info->params->restore_on_move))
+    if (!screen_info->params->tile_on_move)
     {
         return FALSE;
     }
@@ -783,34 +778,69 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 
     layout = screen_info->desktop_layout;
     dist = MIN (TILE_DISTANCE, frameDecorationTop (screen_info) / 2);
+    dist_corner = (MIN (disp_max_x, disp_max_y)) / BORDER_TILE_LENGTH_RELATIVE;
 
-    if (!screen_info->params->wrap_windows || layout.cols < 2)
+    /* make sure the window can be tiled an mouse position is inside the
+     * screen edges */
+    if ((!screen_info->params->wrap_windows || layout.cols < 2)
+        && (x >= disp_x - 1) && (x < disp_max_x + 1)
+        && (y >= disp_y - 1) && (y < disp_max_y + 1))
     {
-        if ((x >= disp_x - 1) && (x < disp_x + dist) &&
-            (y >= disp_y - 1) && (y < disp_max_y + 1))
+        /* tile window depending on the mouse position on the screen */
+
+        if ((y > disp_y + dist_corner) && (y < disp_max_y - dist_corner))
         {
-            return clientTile (c, x, y, TILE_LEFT, !screen_info->params->box_move);
+            /* mouse pointer on left edge excluding corners */
+            if (x < disp_x + dist)
+            {
+                return clientTile (c, x, y, TILE_LEFT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on right edge excluding corners */
+            if (x >= disp_max_x - dist)
+            {
+                return clientTile (c, x, y, TILE_RIGHT, !screen_info->params->box_move);
+            }
         }
 
-        if ((x >= disp_max_x - dist) && (x < disp_max_x + 1) &&
-            (y >= disp_y - 1) && (y < disp_max_y + 1))
+        if (!screen_info->params->maximize_on_move)
         {
-            return clientTile (c, x, y, TILE_RIGHT, !screen_info->params->box_move);
-        }
-    }
-
-    if (!screen_info->params->wrap_windows || layout.rows < 2)
-    {
-        if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
-            (y >= disp_y - 1) && (y < disp_y + dist))
-        {
-            return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
-        }
-
-        if ((x >= disp_x - 1) && (x < disp_max_x + 1) &&
-            (y >= disp_max_y - dist) && (y < disp_max_y + 1))
-        {
-            return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+            if ((x >= disp_x + dist_corner) && (x < disp_max_x - dist_corner))
+            {
+                /* mouse pointer on top edge excluding corners */
+                if (y < disp_y + dist)
+                {
+                    return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
+                }
+                /* mouse pointer on bottom edge excluding corners */
+                if (y >= disp_max_y - dist)
+                {
+                    return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+                }
+            }
+            /* mouse pointer on top left corner */
+            if (((x < disp_x + dist_corner) && (y < disp_y + dist))
+                || ((x < disp_x + dist) && (y < disp_y + dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_UP_LEFT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on top right corner */
+            if (((x >= disp_max_x - dist_corner) && (y < disp_y + dist))
+                || ((x >= disp_max_x - dist) && (y < disp_y + dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_UP_RIGHT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on bottom left corner */
+            if (((x < disp_x + dist_corner) && (y >= disp_max_y - dist))
+                || ((x < disp_x + dist) && (y >= disp_max_y - dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_DOWN_LEFT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on bottom right corner */
+            if (((x >= disp_max_x - dist_corner) && (y >= disp_max_y - dist))
+                || ((x >= disp_max_x - dist) && (y >= disp_max_y - dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_DOWN_RIGHT, !screen_info->params->box_move);
+            }
         }
     }
 
@@ -820,7 +850,6 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 static eventFilterStatus
 clientMoveEventFilter (XEvent * xevent, gpointer data)
 {
-    static gboolean toggled_maximize = FALSE;
     unsigned long configure_flags;
     ScreenInfo *screen_info;
     DisplayInfo *display_info;
@@ -907,9 +936,9 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
             {
                 workspaceSwitch (screen_info, passdata->cancel_workspace, c, FALSE, xevent->xkey.time);
             }
-            if (toggled_maximize)
+            if (passdata->toggled_maximize)
             {
-                toggled_maximize = FALSE;
+                passdata->toggled_maximize = FALSE;
                 if (clientToggleMaximized (c, CLIENT_FLAG_MAXIMIZED, FALSE))
                 {
                     configure_flags = CFG_FORCE_REDRAW;
@@ -949,7 +978,7 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
             clientMoveWarp (c, (XMotionEvent *) xevent);
         }
 
-        if ((screen_info->params->restore_on_move) && FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
+        if (FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
         {
 
             if ((ABS (xevent->xmotion.x_root - passdata->mx) > 15) ||
@@ -961,10 +990,6 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
                 xratio = (xevent->xmotion.x_root - frameX (c)) / (double) frameWidth (c);
                 yratio = (xevent->xmotion.y_root - frameY (c)) / (double) frameHeight (c);
 
-                if (FLAG_TEST_ALL(c->flags, CLIENT_FLAG_MAXIMIZED))
-                {
-                    toggled_maximize = TRUE;
-                }
                 if (clientToggleMaximized (c, c->flags & CLIENT_FLAG_MAXIMIZED, FALSE))
                 {
                     passdata->move_resized = TRUE;
@@ -997,17 +1022,17 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
         c->y = passdata->oy + (xevent->xmotion.y_root - passdata->my);
 
         clientSnapPosition (c, prev_x, prev_y);
-        if (screen_info->params->restore_on_move && toggled_maximize)
+        if (screen_info->params->maximize_on_move)
         {
             if ((clientConstrainPos (c, FALSE) & CLIENT_CONSTRAINED_TOP) &&
                  clientToggleMaximized (c, CLIENT_FLAG_MAXIMIZED, FALSE))
             {
                 configure_flags = CFG_FORCE_REDRAW;
-                toggled_maximize = FALSE;
+                passdata->toggled_maximize = FALSE;
                 passdata->move_resized = TRUE;
             }
         }
-        else if (!clientMoveTile (c, (XMotionEvent *) xevent))
+        if (!clientMoveTile (c, (XMotionEvent *) xevent))
         {
             clientConstrainPos(c, FALSE);
         }
@@ -1057,7 +1082,7 @@ clientMoveEventFilter (XEvent * xevent, gpointer data)
     if (!moving)
     {
         TRACE ("event loop now finished");
-        toggled_maximize = FALSE;
+        passdata->toggled_maximize = FALSE;
         clientMoveWarp (c, NULL);
         gtk_main_quit ();
     }
@@ -1120,6 +1145,15 @@ clientMove (Client * c, XEvent * ev)
     {
         clientSetHandle(&passdata, NO_HANDLE);
         passdata.released = passdata.use_keys = TRUE;
+    }
+
+    if (FLAG_TEST_ALL (c->flags, CLIENT_FLAG_MAXIMIZED))
+    {
+        passdata.toggled_maximize = TRUE;
+    }
+    else
+    {
+        passdata.toggled_maximize = FALSE;
     }
 
     g1 = myScreenGrabKeyboard (screen_info, myDisplayGetCurrentTime (display_info));

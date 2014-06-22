@@ -446,8 +446,8 @@ or "skip taskbar" properties set</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="restore_on_move_check">
-                    <property name="label" translatable="yes">Restore original size of maximi_zed windows when moving</property>
+                  <object class="GtkCheckButton" id="maximize_on_move_check">
+                    <property name="label" translatable="yes">Automatically _maximize windows when moving toward the top screen edge</property>
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
