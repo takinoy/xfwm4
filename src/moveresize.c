@@ -55,7 +55,8 @@
     ButtonReleaseMask | \
     LeaveWindowMask
 
-#define TILE_DISTANCE 2
+#define TILE_DISTANCE 10
+#define BORDER_TILE_LENGTH_RELATIVE 5
 
 typedef struct _MoveResizeData MoveResizeData;
 struct _MoveResizeData
@@ -756,7 +757,7 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 {
     ScreenInfo *screen_info;
     GdkRectangle rect;
-    int x, y, disp_x, disp_y, disp_max_x, disp_max_y, dist;
+    int x, y, disp_x, disp_y, disp_max_x, disp_max_y, dist, dist_corner;
     NetWmDesktopLayout layout;
 
     screen_info = c->screen_info;
@@ -777,60 +778,68 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
 
     layout = screen_info->desktop_layout;
     dist = MIN (TILE_DISTANCE, frameDecorationTop (screen_info) / 2);
+    dist_corner = (MIN (disp_max_x, disp_max_y)) / BORDER_TILE_LENGTH_RELATIVE;
 
-    if (!screen_info->params->wrap_windows || layout.cols < 2)
+    /* make sure the window can be tiled an mouse position is inside the
+     * screen edges */
+    if ((!screen_info->params->wrap_windows || layout.cols < 2)
+        && (x >= disp_x - 1) && (x < disp_max_x + 1)
+        && (y >= disp_y - 1) && (y < disp_max_y + 1))
     {
         /* tile window depending on the mouse position on the screen */
 
-        if ((y > disp_y + dist) && (y < disp_max_y - dist))
+        if ((y > disp_y + dist_corner) && (y < disp_max_y - dist_corner))
         {
             /* mouse pointer on left edge excluding corners */
-            if ((x >= disp_x - 1) && (x < disp_x + dist))
+            if (x < disp_x + dist)
             {
                 return clientTile (c, x, y, TILE_LEFT, !screen_info->params->box_move);
             }
             /* mouse pointer on right edge excluding corners */
-            if ((x >= disp_max_x - dist) && (x < disp_max_x + 1))
+            if (x >= disp_max_x - dist)
             {
                 return clientTile (c, x, y, TILE_RIGHT, !screen_info->params->box_move);
             }
         }
 
-        if (!screen_info->params->maximize_on_move
-            && (x >= disp_x - 1) && (x < disp_max_x + 1))
+        if (!screen_info->params->maximize_on_move)
         {
-            /* mouse pointer on top edge */
-            if ((y >= disp_y - 1) && (y < disp_y + dist))
+            if ((x >= disp_x + dist_corner) && (x < disp_max_x - dist_corner))
             {
-                /* mouse pointer on top left corner */
-                if (x < disp_x + dist)
-                {
-                    return clientTile (c, x, y, TILE_UP_LEFT, !screen_info->params->box_move);
-                }
-                /* mouse pointer on top right corner */
-                if (x >= disp_max_x - dist)
-                {
-                    return clientTile (c, x, y, TILE_UP_RIGHT, !screen_info->params->box_move);
-                }
                 /* mouse pointer on top edge excluding corners */
-                return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
-            }
-
-            /* mouse pointer on bottom edge */
-            if ((y >= disp_max_y - dist) && (y < disp_max_y + 1))
-            {
-                /* mouse pointer on bottom left corner */
-                if (x < disp_x + dist)
+                if (y < disp_y + dist)
                 {
-                    return clientTile (c, x, y, TILE_DOWN_LEFT, !screen_info->params->box_move);
-                }
-                /* mouse pointer on bottom right corner */
-                if (x >= disp_max_x - dist)
-                {
-                    return clientTile (c, x, y, TILE_DOWN_RIGHT, !screen_info->params->box_move);
+                    return clientTile (c, x, y, TILE_UP, !screen_info->params->box_move);
                 }
                 /* mouse pointer on bottom edge excluding corners */
-                return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+                if (y >= disp_max_y - dist)
+                {
+                    return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
+                }
+            }
+            /* mouse pointer on top left corner */
+            if (((x < disp_x + dist_corner) && (y < disp_y + dist))
+                || ((x < disp_x + dist) && (y < disp_y + dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_UP_LEFT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on top right corner */
+            if (((x >= disp_max_x - dist_corner) && (y < disp_y + dist))
+                || ((x >= disp_max_x - dist) && (y < disp_y + dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_UP_RIGHT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on bottom left corner */
+            if (((x < disp_x + dist_corner) && (y >= disp_max_y - dist))
+                || ((x < disp_x + dist) && (y >= disp_max_y - dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_DOWN_LEFT, !screen_info->params->box_move);
+            }
+            /* mouse pointer on bottom right corner */
+            if (((x >= disp_max_x - dist_corner) && (y >= disp_max_y - dist))
+                || ((x >= disp_max_x - dist) && (y >= disp_max_y - dist_corner)))
+            {
+                return clientTile (c, x, y, TILE_DOWN_RIGHT, !screen_info->params->box_move);
             }
         }
     }
