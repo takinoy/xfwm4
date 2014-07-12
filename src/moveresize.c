@@ -817,30 +817,31 @@ clientMoveTile (Client *c, XMotionEvent *xevent)
                     return clientTile (c, x, y, TILE_DOWN, !screen_info->params->box_move);
                 }
             }
-            /* mouse pointer on top left corner */
-            if (((x < disp_x + dist_corner) && (y < disp_y + dist))
-                || ((x < disp_x + dist) && (y < disp_y + dist_corner)))
-            {
-                return clientTile (c, x, y, TILE_UP_LEFT, !screen_info->params->box_move);
-            }
-            /* mouse pointer on top right corner */
-            if (((x >= disp_max_x - dist_corner) && (y < disp_y + dist))
-                || ((x >= disp_max_x - dist) && (y < disp_y + dist_corner)))
-            {
-                return clientTile (c, x, y, TILE_UP_RIGHT, !screen_info->params->box_move);
-            }
-            /* mouse pointer on bottom left corner */
-            if (((x < disp_x + dist_corner) && (y >= disp_max_y - dist))
-                || ((x < disp_x + dist) && (y >= disp_max_y - dist_corner)))
-            {
-                return clientTile (c, x, y, TILE_DOWN_LEFT, !screen_info->params->box_move);
-            }
-            /* mouse pointer on bottom right corner */
-            if (((x >= disp_max_x - dist_corner) && (y >= disp_max_y - dist))
-                || ((x >= disp_max_x - dist) && (y >= disp_max_y - dist_corner)))
-            {
-                return clientTile (c, x, y, TILE_DOWN_RIGHT, !screen_info->params->box_move);
-            }
+        }
+
+        /* mouse pointer on top left corner */
+        if (((x < disp_x + dist_corner) && (y < disp_y + dist))
+            || ((x < disp_x + dist) && (y < disp_y + dist_corner)))
+        {
+            return clientTile (c, x, y, TILE_UP_LEFT, !screen_info->params->box_move);
+        }
+        /* mouse pointer on top right corner */
+        if (((x >= disp_max_x - dist_corner) && (y < disp_y + dist))
+            || ((x >= disp_max_x - dist) && (y < disp_y + dist_corner)))
+        {
+            return clientTile (c, x, y, TILE_UP_RIGHT, !screen_info->params->box_move);
+        }
+        /* mouse pointer on bottom left corner */
+        if (((x < disp_x + dist_corner) && (y >= disp_max_y - dist))
+            || ((x < disp_x + dist) && (y >= disp_max_y - dist_corner)))
+        {
+            return clientTile (c, x, y, TILE_DOWN_LEFT, !screen_info->params->box_move);
+        }
+        /* mouse pointer on bottom right corner */
+        if (((x >= disp_max_x - dist_corner) && (y >= disp_max_y - dist))
+            || ((x >= disp_max_x - dist) && (y >= disp_max_y - dist_corner)))
+        {
+            return clientTile (c, x, y, TILE_DOWN_RIGHT, !screen_info->params->box_move);
         }
     }
 
