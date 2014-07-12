@@ -3380,11 +3380,6 @@ clientTile (Client *c, gint cx, gint cy, tilePositionType tile, gboolean send_co
             break;
     }
 
-    if (!FLAG_TEST (c->flags, CLIENT_FLAG_MAXIMIZED))
-    {
-        clientSaveSizePos (c);
-    }
-
     old_flags = c->flags;
     FLAG_UNSET (c->flags, CLIENT_FLAG_MAXIMIZED);
     clientNewMaxState (c, &wc, mode);
