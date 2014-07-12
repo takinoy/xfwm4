@@ -4,7 +4,7 @@
 pkgname=xfwm4-titleless-dev
 _pkgname=${pkgname%-*}
 pkgver=@PACKAGE_VERSION@
-pkgrel=2
+pkgrel=1
 pkgdesc="Xfce window manager with hide title on maximized features, corner tiling and fixes"
 arch=('i686' 'x86_64')
 url="https://github.com/cedl38/xfwm4-titleless"
@@ -12,7 +12,7 @@ license=('GPL2')
 groups=('xfce4')
 depends=('libxfce4ui>=4.11.0' 'libwnck' 'hicolor-icon-theme')
 optdepends=('xfce4-windowck-plugin: to put the maximized window title on the panel.')
-makedepends=('intltool' 'xfce4-dev-tools')
+makedepends=('intltool' 'xfce4-dev-tools' 'exo')
 provides=("xfwm4=${pkgver}")
 conflicts=('xfwm4')
 options=('!libtool')

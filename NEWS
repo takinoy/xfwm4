@@ -2,6 +2,10 @@
 xfwm4-titleless:
 ================
 
+4.11.4
+    Allow corner tiling with maximize on move option
+    Fix restore window position for maximized windows that was previously tiled
+
 4.11.3
     Take account of panels reserved space for tiling (Fix #8764)
     Implement corner tiling with keyboard and mouse.
